@@ -36,7 +36,7 @@
           fixed="right"
           label="详情">
           <template slot-scope="scope">
-            <el-button @click="dialogLookupFormVisible = true" type="text" size="small">查看</el-button>
+            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
 
             <el-button type="text" size="small">编辑</el-button>
           </template>
@@ -50,7 +50,7 @@
       </el-pagination>
     </div>
     <el-dialog title="查找信息" width="70%" :visible.sync="dialogLookupFormVisible">
-      <v-old></v-old>
+      <v-old :newdata="newdata"></v-old>
     </el-dialog>
   </div>
 
@@ -63,6 +63,7 @@
       data() {
         return {
           dialogAddFormVisible: false,
+          newdata: [],
           addform:{
             field_id: ''
           },
@@ -73,6 +74,13 @@
       },
       components: {
         'v-old': OldDetailInformation
+      },
+      methods:{
+        handleClick(row) {
+          console.log('row',row)
+          this.newdata=row
+          this.dialogLookupFormVisible = true
+        }
       },
       props:['result']
 
