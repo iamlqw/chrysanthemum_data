@@ -2,8 +2,8 @@
   <div id="data">
     <div>
       <h3>按品种名直接检索:</h3><br>
-      <el-input v-model="input" placeholder="请输入内容" style="width:300px;"></el-input>
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
+      <el-input v-model="form.cultivar_name" placeholder="请输入内容" style="width:300px;"></el-input>
+      <el-button type="primary" icon="el-icon-search" @click="search()">搜索</el-button>
     </div>
     <div>
       <h3>按指标模糊检索:</h3>
@@ -17,7 +17,7 @@
       <h3>检索数据:</h3>
     </div>
     <div>
-    <v-datalist></v-datalist>
+    <v-datalist :result="result"></v-datalist>
     </div>
   </div>
 
@@ -27,8 +27,34 @@
   import DataList from '../components/DataList.vue'
     export default {
       name: "Data",
+      data () {
+        return {
+          form: {
+            email:'',
+            cultivar_name: ''
+          },
+          result:[]
+        }
+      },
       components:{
-          'v-datalist':DataList
+          'v-datalist':DataList,
+      },
+      methods:{
+        search(){
+          this.$axios.get('/api/currentuser').then(res => {
+            console.log('currentemail', res.data.data[0])
+              this.email= res.data.data[0]
+          })
+          console.log(this.form.cultivar_name)
+          this.$axios.post(
+            '/api/getcharacterbyname',
+            this.form
+            //向后端传递参数
+          ).then(res => {
+            console.log('result', res.data.data)
+            this.result=res.data.data
+          })
+        }
       }
     }
 </script>

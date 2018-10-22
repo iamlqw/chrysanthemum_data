@@ -10,7 +10,7 @@
           <el-menu-item index="2"><router-link to='/homepage/data'>数据</router-link></el-menu-item>
         </el-menu>
     </el-header>
-    <el-main>
+    <el-main id="main">
       <el-card><router-view></router-view></el-card>
     </el-main>
   </el-container>
@@ -24,6 +24,10 @@
 </script>
 
 <style scoped>
+  #main	{
+
+    padding:0;
+  }
   h1 {
     font-family: Georgia;
     font-size:30px;
