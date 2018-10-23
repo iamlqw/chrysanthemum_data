@@ -57,6 +57,7 @@
 </template>
 
 <script>
+  import VueEvent from '../model/VueEvent.js'
   import OldDetailInformation from '../components/DetailedInformation/OldDetailInformation'
     export default {
       name: "DataList",
@@ -82,7 +83,12 @@
           this.dialogLookupFormVisible = true
         }
       },
-      props:['result']
+      props:['result'],
+      mounted(){
+        VueEvent.$on('to-list',function (data) {
+          console.log(data)
+        })
+      }
 
     }
 </script>
