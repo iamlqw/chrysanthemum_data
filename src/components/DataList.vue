@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <div id="button">
-      <el-button type="primary" @click="dialogAddFormVisible = true">添加</el-button>
+      <el-button type="primary" @click="add">添加</el-button>
 
       <el-dialog title="添加信息" :visible.sync="dialogAddFormVisible">
         <el-form :model="addform">
@@ -17,7 +17,7 @@
     </div>
     <div id="table">
       <el-table
-        :data="result"
+        :data="list"
         border
         style="width: 80%">
         <el-table-column
@@ -57,12 +57,13 @@
 </template>
 
 <script>
-  import VueEvent from '../model/VueEvent.js'
+   import VueEvent from '../model/VueEvent.js'
   import OldDetailInformation from '../components/DetailedInformation/OldDetailInformation'
     export default {
       name: "DataList",
       data() {
         return {
+          list:[],
           dialogAddFormVisible: false,
           newdata: [],
           addform:{
@@ -81,13 +82,25 @@
           console.log('row',row)
           this.newdata=row
           this.dialogLookupFormVisible = true
+        },
+        add(){
+          alert('ssss')
         }
       },
       props:['result'],
       mounted(){
+        var _this = this;
         VueEvent.$on('to-list',function (data) {
-          console.log(data)
+          console.log('tolist',data)
+          _this.list = data
+          console.log('list',this.list)
         })
+      },
+      watch: {
+        result: function () {
+          console.log('result',this.result)
+          this.list = this.result
+        },
       }
 
     }

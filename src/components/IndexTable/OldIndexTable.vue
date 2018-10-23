@@ -111,7 +111,7 @@
 </template>
 
 <script>
-  import VueEvent from '../../model/VueEvent.js'
+   import VueEvent from '../../model/VueEvent.js'
     export default {
       name: "IndexTable",
       data(){
@@ -176,7 +176,6 @@
             console.log('currentemail', res.data.data[0])
             this.form.email= res.data.data[0]
           })
-          console.log('form',this.form)
           this.$axios.post(
             '/api/getcharacterbyindex',
             this.form
@@ -184,8 +183,8 @@
           ).then(res => {
             console.log('result', res.data.data)
             this.result=res.data.data
+            VueEvent.$emit('to-list',res.data.data)
           })
-          VueEvent.$emit('to-list',this.result)
         }
       },
     }
