@@ -39,6 +39,7 @@
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
 
             <el-button type="text" size="small">编辑</el-button>
+            <el-button @click="downloadClick(scope.row)" type="text" size="small">下载</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -50,27 +51,29 @@
       </el-pagination>
     </div>
     <el-dialog title="查找信息" width="70%" :visible.sync="dialogLookupFormVisible">
-      <v-old :newdata="newdata"></v-old>
+      <v-old :olddata="olddata":baseCode="baseCode"></v-old>
     </el-dialog>
   </div>
 
 </template>
 
 <script>
-   import VueEvent from '../model/VueEvent.js'
+  let Base64 = require('js-base64').Base64;
+  import VueEvent from '../model/VueEvent.js'
   import OldDetailInformation from '../components/DetailedInformation/OldDetailInformation'
     export default {
       name: "DataList",
       data() {
         return {
+          email:'',
           list:[],
           dialogAddFormVisible: false,
-          newdata: [],
+          olddata: [],
+          baseCode: '',
           addform:{
             field_id: ''
           },
           dialogLookupFormVisible: false,
-
           pagesize: 10,
         }
       },
@@ -79,21 +82,52 @@
       },
       methods:{
         handleClick(row) {
+          console.log('currentemail', this.email)
           console.log('row',row)
-          this.newdata=row
+          this.olddata=row
+            this.$axios({
+              method: 'post',
+              url: '/api/picprocess',
+              data: {
+                email: this.email,
+                cultivar_id: [row.id]
+              }
+            }).then(res => {
+              //console.log('baseCode', res.data.pic['cultivar'+row.id][0][0].base64)
+              this.baseCode=res.data.pic['cultivar'+row.id][0][0].base64
+            })
           this.dialogLookupFormVisible = true
         },
+        downloadClick(row){
+          console.log('currentemail', this.email)
+          this.$axios({
+            method: 'post',
+            url: '/api/sendemail',
+            data: {
+              email: this.email,
+              classification: 'artificial',
+              id:[row.id],
+              quality:'high'
+            }
+          }).then(res => {
+            console.log('sendemail', res.data)
+
+          })
+        },
         add(){
-          alert('ssss')
+          alert(this.email)
         }
       },
       props:['result'],
       mounted(){
-        var _this = this;
+        var _this = this;//this指代当前对象，在VueEvent内部为VueEvent
         VueEvent.$on('to-list',function (data) {
           console.log('tolist',data)
           _this.list = data
           console.log('list',this.list)
+        })
+        this.$axios.get('/api/currentuser').then(res => {
+          this.email = res.data.data[0]
         })
       },
       watch: {

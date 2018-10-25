@@ -19,6 +19,9 @@ Vue.use(ElementUI)
 //引入axios
 import axios from 'axios';
   Vue.prototype.$axios = axios
+
+//Base64解码
+let Base64 = require('js-base64').Base64;
 //创建组件
 import HomePage from './components/HomePage.vue'
   import UsersInfo from './components/Users/UsersInfo.vue'

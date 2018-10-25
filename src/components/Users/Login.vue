@@ -9,11 +9,6 @@
           <el-form-item label="密码" :label-width="formLabelWidth">
             <el-input type="password" v-model="loginform.password" autocomplete="off"></el-input>
           </el-form-item>
-          <!--<el-form-item label="验证码" :label-width="formLabelWidth">-->
-            <!---->
-            <!--<el-input v-model="loginform.captcha" autocomplete="off"></el-input><img src="http://127.0.0.1/captcha/mews?r">-->
-            <!--<el-input v-model="random" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
           <el-form-item label="验证码" :label-width="formLabelWidth">
           <el-col :span="12"><el-input v-model="loginform.captcha" autocomplete="off"></el-input></el-col>
           <el-col :span="12"><img :src="codeUrl" @click="onRefreshCode()"></el-col>
