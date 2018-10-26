@@ -1,33 +1,7 @@
 <template>
-  <el-container class="app_container_view">
-    <!--<h1>菊花数据管理平台</h1>-->
-    <el-header height="10%">
-      <transition name="slideDown">
-        <el-card class="header-box-card">
-          <span style="color: #696969; font-size:30px">菊花数据管理平台</span>
-          <!--<el-dropdown style="float: right"  class="user_info">-->
-            <!--<el-button type="text"  style="font-size: 16px;color: #518DD6">-->
-              <!--<i class="fa fa-user-o" aria-hidden="true"></i>-->
-              <!--欢迎您！{{ msg[0][0].name }}<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>-->
-            <!--</el-button>-->
-            <!--<el-dropdown-menu slot="dropdown">-->
-              <!--<el-dropdown-item><el-button type="text" @click="info">个人信息</el-button></el-dropdown-item>-->
-              <!--<el-dropdown-item><el-button type="text" @click="logout">退出</el-button></el-dropdown-item>-->
-            <!--</el-dropdown-menu>-->
-          <!--</el-dropdown>-->
-        </el-card>
-      </transition>
-    </el-header>
-    <el-main class="main-content">
-      <transition name="fadeUp">
-        <el-card class="main-box-card" v-show="showMain"><router-view></router-view></el-card>
-      </transition>
-    </el-main>
-    <el-card class="footer-card">
-      <p> 菊花数据管理平台 </p>
-      <p class="copyright">2018 Copyright 北京林业大学</p>
-    </el-card>
-  </el-container>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>

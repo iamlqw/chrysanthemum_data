@@ -59,7 +59,7 @@ Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
   let info = ''
   var email = []
-  if (to.path === '/login' || to.path === '/index') {
+  if (to.path === '/login') {
     next()
     return
   }
@@ -68,7 +68,12 @@ router.beforeEach((to, from, next) => {
     if(res.data.data[0]===null){
       alert('请重新登录', {confirmButtonText: 'ok'})
       next({path: '/login'})
+    }else{
+      next()
     }
+
+
+
   //   else {
   //     info = res.data.data[0]
   //     email.push({
@@ -80,7 +85,7 @@ router.beforeEach((to, from, next) => {
   //     next()
   //   })
   //   }
-    next()
+
   })
   //console.log('email', email)
 

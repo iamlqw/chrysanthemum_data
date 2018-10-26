@@ -1,71 +1,97 @@
 <template>
     <div>
-      <el-button type="text" id="index" @click="dialogLoginFormVisible = true">登陆</el-button>
-      <el-dialog title="登陆" :visible.sync="dialogLoginFormVisible">
+      <div class="page-container">
+        <h1>登陆</h1>
         <el-form :model="loginform">
-          <el-form-item label="邮箱" :label-width="formLabelWidth">
-            <el-input v-model="loginform.email" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth">
-            <el-input type="password" v-model="loginform.password" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="验证码" :label-width="formLabelWidth">
-          <el-col :span="12"><el-input v-model="loginform.captcha" autocomplete="off"></el-input></el-col>
-          <el-col :span="12"><img :src="codeUrl" @click="onRefreshCode()"></el-col>
-          </el-form-item>
-          {{msg}}
+          <input type="text" v-model="loginform.email" class="username" placeholder="用户名">
+          <input type="password" v-model="loginform.password" class="password" placeholder="密码">
+          <input type="text" v-model="loginform.captcha" class="username" placeholder="验证码">
+          <img :src="codeUrl" @click="onRefreshCode()">
+
+          <button type="submit" @click="login()">登陆</button>
+          <button type="submit">注册</button>
+          <div class="error"><span>+</span></div>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="cancel()">取 消</el-button>
-          <el-button type="primary" @click="login()">确 定</el-button>
+        <div class="connect">
+          <p>{{msg}}</p>
+          <p>
+            <a class="facebook" href=""></a>
+            <a class="twitter" href=""></a>
+          </p>
         </div>
-      </el-dialog>
-      <el-button type="text" id="index" @click="dialogRegisterFormVisible = true">注册</el-button>
-      <el-dialog title="注册" :visible.sync="dialogRegisterFormVisible">
-        <el-form :model="registerform">
-          <el-form-item label="用户名" :label-width="formLabelWidth">
-            <el-input v-model="registerform.username" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth">
-            <el-input type="password" v-model="registerform.password" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="确认密码" :label-width="formLabelWidth">
-            <el-input type="password" v-model="registerform.repassword" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="年龄" :label-width="formLabelWidth">
-            <el-input v-model="registerform.age" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="真实姓名" :label-width="formLabelWidth">
-            <el-input v-model="registerform.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="性别" :label-width="formLabelWidth">
-            <el-radio-group v-model="registerform.sex">
-              <el-radio :label="1">男</el-radio>
-              <el-radio :label="0">女</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="邮箱" :label-width="formLabelWidth">
-            <el-input v-model="registerform.email" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="手机号" :label-width="formLabelWidth">
-            <el-input v-model="registerform.phone" autocomplete="off"></el-input>
-          </el-form-item>
-          {{registermsg}}
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="cancel()">取 消</el-button>
-          <el-button type="primary" @click="register()">确 定</el-button>
-        </div>
-      </el-dialog>
-      <el-carousel indicator-position="outside">
-        <el-carousel-item v-for="item in 4" :key="item">
-          <h3>{{ item }}</h3>
-        </el-carousel-item>
-      </el-carousel>
+      </div>
+      <!--<el-button type="text" id="index" @click="dialogLoginFormVisible = true">登陆</el-button>-->
+      <!--<el-dialog title="登陆" :visible.sync="dialogLoginFormVisible">-->
+        <!--<el-form :model="loginform">-->
+          <!--<el-form-item label="邮箱" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="loginform.email" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="密码" :label-width="formLabelWidth">-->
+            <!--<el-input type="password" v-model="loginform.password" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="验证码" :label-width="formLabelWidth">-->
+          <!--<el-col :span="12"><el-input v-model="loginform.captcha" autocomplete="off"></el-input></el-col>-->
+          <!--<el-col :span="12"><img :src="codeUrl" @click="onRefreshCode()"></el-col>-->
+          <!--</el-form-item>-->
+          <!--{{msg}}-->
+        <!--</el-form>-->
+        <!--<div slot="footer" class="dialog-footer">-->
+          <!--<el-button @click="cancel()">取 消</el-button>-->
+          <!--<el-button type="primary" @click="login()">确 定</el-button>-->
+        <!--</div>-->
+      <!--</el-dialog>-->
+      <!--<el-button type="text" id="index" @click="dialogRegisterFormVisible = true">注册</el-button>-->
+      <!--<el-dialog title="注册" :visible.sync="dialogRegisterFormVisible">-->
+        <!--<el-form :model="registerform">-->
+          <!--<el-form-item label="用户名" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="registerform.username" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="密码" :label-width="formLabelWidth">-->
+            <!--<el-input type="password" v-model="registerform.password" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="确认密码" :label-width="formLabelWidth">-->
+            <!--<el-input type="password" v-model="registerform.repassword" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="年龄" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="registerform.age" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="真实姓名" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="registerform.name" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="性别" :label-width="formLabelWidth">-->
+            <!--<el-radio-group v-model="registerform.sex">-->
+              <!--<el-radio :label="1">男</el-radio>-->
+              <!--<el-radio :label="0">女</el-radio>-->
+            <!--</el-radio-group>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="邮箱" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="registerform.email" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<el-form-item label="手机号" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="registerform.phone" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--{{registermsg}}-->
+        <!--</el-form>-->
+        <!--<div slot="footer" class="dialog-footer">-->
+          <!--<el-button @click="cancel()">取 消</el-button>-->
+          <!--<el-button type="primary" @click="register()">确 定</el-button>-->
+        <!--</div>-->
+      <!--</el-dialog>-->
+      <!--<el-carousel indicator-position="outside">-->
+        <!--<el-carousel-item v-for="item in 4" :key="item">-->
+          <!--<h3>{{ item }}</h3>-->
+        <!--</el-carousel-item>-->
+      <!--</el-carousel>-->
     </div>
 </template>
-
 <script>
+  import '../../assets/css/reset.css'
+  import '../../assets/css/style.css'
+  import '../../assets/css/supersized.css'
+  import '../../assets/js/jquery-1.8.2.min.js'
+  import '../../assets/js/scripts.js'
+  import '../../assets/js/supersized.3.2.7.min.js'
+  import '../../assets/js/supersized-init.js'
     export default {
         name: "Login",
       data() {
