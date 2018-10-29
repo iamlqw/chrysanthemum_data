@@ -1,15 +1,15 @@
 <template>
-    <div>
+    <div id="login">
       <div class="page-container">
         <h1>登陆</h1>
         <el-form :model="loginform">
-          <input type="text" v-model="loginform.email" class="username" placeholder="用户名">
+          <input type="text" v-model="loginform.email" class="username" placeholder="邮箱">
           <input type="password" v-model="loginform.password" class="password" placeholder="密码">
-          <input type="text" v-model="loginform.captcha" class="username" placeholder="验证码">
+          <input type="text" style="width:145px" v-model="loginform.captcha" class="captcha" placeholder="验证码">
           <img :src="codeUrl" @click="onRefreshCode()">
 
           <button type="submit" @click="login()">登陆</button>
-          <button type="submit">注册</button>
+          <button type="submit" @click="dialogRegisterFormVisible = true">注册</button>
           <div class="error"><span>+</span></div>
         </el-form>
         <div class="connect">
@@ -20,63 +20,42 @@
           </p>
         </div>
       </div>
-      <!--<el-button type="text" id="index" @click="dialogLoginFormVisible = true">登陆</el-button>-->
-      <!--<el-dialog title="登陆" :visible.sync="dialogLoginFormVisible">-->
-        <!--<el-form :model="loginform">-->
-          <!--<el-form-item label="邮箱" :label-width="formLabelWidth">-->
-            <!--<el-input v-model="loginform.email" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="密码" :label-width="formLabelWidth">-->
-            <!--<el-input type="password" v-model="loginform.password" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="验证码" :label-width="formLabelWidth">-->
-          <!--<el-col :span="12"><el-input v-model="loginform.captcha" autocomplete="off"></el-input></el-col>-->
-          <!--<el-col :span="12"><img :src="codeUrl" @click="onRefreshCode()"></el-col>-->
-          <!--</el-form-item>-->
-          <!--{{msg}}-->
-        <!--</el-form>-->
-        <!--<div slot="footer" class="dialog-footer">-->
-          <!--<el-button @click="cancel()">取 消</el-button>-->
-          <!--<el-button type="primary" @click="login()">确 定</el-button>-->
-        <!--</div>-->
-      <!--</el-dialog>-->
-      <!--<el-button type="text" id="index" @click="dialogRegisterFormVisible = true">注册</el-button>-->
-      <!--<el-dialog title="注册" :visible.sync="dialogRegisterFormVisible">-->
-        <!--<el-form :model="registerform">-->
-          <!--<el-form-item label="用户名" :label-width="formLabelWidth">-->
-            <!--<el-input v-model="registerform.username" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="密码" :label-width="formLabelWidth">-->
-            <!--<el-input type="password" v-model="registerform.password" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="确认密码" :label-width="formLabelWidth">-->
-            <!--<el-input type="password" v-model="registerform.repassword" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="年龄" :label-width="formLabelWidth">-->
-            <!--<el-input v-model="registerform.age" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="真实姓名" :label-width="formLabelWidth">-->
-            <!--<el-input v-model="registerform.name" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="性别" :label-width="formLabelWidth">-->
-            <!--<el-radio-group v-model="registerform.sex">-->
-              <!--<el-radio :label="1">男</el-radio>-->
-              <!--<el-radio :label="0">女</el-radio>-->
-            <!--</el-radio-group>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="邮箱" :label-width="formLabelWidth">-->
-            <!--<el-input v-model="registerform.email" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--<el-form-item label="手机号" :label-width="formLabelWidth">-->
-            <!--<el-input v-model="registerform.phone" autocomplete="off"></el-input>-->
-          <!--</el-form-item>-->
-          <!--{{registermsg}}-->
-        <!--</el-form>-->
-        <!--<div slot="footer" class="dialog-footer">-->
-          <!--<el-button @click="cancel()">取 消</el-button>-->
-          <!--<el-button type="primary" @click="register()">确 定</el-button>-->
-        <!--</div>-->
-      <!--</el-dialog>-->
+      <el-dialog title="注册" :visible.sync="dialogRegisterFormVisible">
+        <el-form :model="registerform">
+          <el-form-item label="邮箱" :label-width="formLabelWidth">
+            <el-input v-model="registerform.email" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="用户名" :label-width="formLabelWidth">
+            <el-input v-model="registerform.username" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" :label-width="formLabelWidth">
+            <el-input type="password" v-model="registerform.password" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" :label-width="formLabelWidth">
+            <el-input type="password" v-model="registerform.repassword" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="年龄" :label-width="formLabelWidth">
+            <el-input v-model="registerform.age" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="真实姓名" :label-width="formLabelWidth">
+            <el-input v-model="registerform.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="性别" :label-width="formLabelWidth">
+            <el-radio-group v-model="registerform.sex">
+              <el-radio :label="1">男</el-radio>
+              <el-radio :label="0">女</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="手机号" :label-width="formLabelWidth">
+            <el-input v-model="registerform.phone" autocomplete="off"></el-input>
+          </el-form-item>
+          {{registermsg}}
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="cancel()">取 消</el-button>
+          <el-button type="primary" @click="register()">确 定</el-button>
+        </div>
+      </el-dialog>
       <!--<el-carousel indicator-position="outside">-->
         <!--<el-carousel-item v-for="item in 4" :key="item">-->
           <!--<h3>{{ item }}</h3>-->
@@ -127,9 +106,7 @@
         cancel(){
           this.dialogRegisterFormVisible = false
           this.dialogLoginFormVisible = false
-          for ( var i = 0; i < this.registerform.length; i++){
-            this.registerform[i]='';
-          }
+          this.registerform='';
         },
         login() {
           this.$axios.post(
@@ -145,7 +122,7 @@
               this.msg = '邮箱或密码错误'
               this.codeUrl = '/api/captcha/mews?r' + Math.random()
             } else if (res.data.status === 'success') {
-              this.$router.push({path: '/homepage'})
+              this.$router.push({path: '/homepage/data'})
               this.dialogLoginFormVisible = false
             }else{
               this.msg = '未知错误'
@@ -153,19 +130,39 @@
           })
         },
         register(){
-          this.$axios.post(
-            '/api/adduser',
-            this.registerform
-          ).then(res => {
-            if(res.data.status==='success'){
-              this.$alert('注册成功!')
-              this.dialogRegisterFormVisible = false
-            }else{
-              this.$alert('该邮箱已被注册!')
-            }
-            console.log(res.data)
-          })
-        }
+          var reEmail = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+          var rePhone=/^(13[0-9]|14[0-9]|15[0-9]|166|17[0-9]|18[0-9]|19[8|9])\d{8}$/;
+          var reAge=/^[1-9]\d*$/;
+          if(!reEmail.test(this.registerform.email)){
+            this.$alert('邮箱格式不正确！')
+          }else if(this.registerform.username===''){
+            this.$alert('用户名不能为空！')
+          }else if(this.registerform.password.length<6){
+            this.$alert('密码长度不得小于六位！')
+          } else if(this.registerform.repassword!=this.registerform.password){
+            this.$alert('两次密码输入不一致！')
+          }else if(this.registerform.sex===''){
+            this.$alert('请选择性别！')
+          }else if(!rePhone.test(this.registerform.phone)){
+            this.$alert('手机号格式不正确！')
+          }else if(!reAge.test(this.registerform.age)){
+            this.$alert('年龄格式不正确！')
+          }else{
+            this.$axios.post(
+              '/api/adduser',
+              this.registerform
+            ).then(res => {
+              if(res.data.status==='success'){
+                this.$alert('注册成功!')
+                this.dialogRegisterFormVisible = false
+                this.registerform=[]
+              }else{
+                this.$alert('该邮箱已被注册!')
+              }
+              console.log(res.data)
+            })
+          }
+        },
       }
     }
 </script>

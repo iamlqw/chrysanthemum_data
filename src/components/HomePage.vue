@@ -2,10 +2,19 @@
 
   <el-container class="app_container_view">
     <!--<h1>菊花数据管理平台</h1>-->
-    <el-header height="10%">
+    <el-header height="12%">
       <transition name="slideDown">
         <el-card class="header-box-card">
-          <span style="color: #696969; font-size:30px">菊花数据管理平台</span>
+          <span style="color: #696969; font-size:40px">菊花数据管理平台</span>
+          <el-dropdown id="headright">
+          <span class="el-dropdown-link">
+            欢迎 {{name}}<i class="el-icon-arrow-down el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item><router-link to='/homepage/usersinfo'>用户信息</router-link></el-dropdown-item>
+            <el-dropdown-item><el-buttom @click="layout()">注销</el-buttom></el-dropdown-item>
+          </el-dropdown-menu>
+          </el-dropdown>
         </el-card>
       </transition>
     </el-header>
@@ -15,8 +24,7 @@
           <el-container>
             <el-header id="headleft">
               <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                <el-menu-item index="1"><router-link to='/homepage/usersinfo'>用户信息</router-link></el-menu-item>
-                <el-menu-item index="2"><router-link to='/homepage/data'>数据</router-link></el-menu-item>
+                <el-menu-item><router-link to='/homepage/data'>数据</router-link></el-menu-item>
               </el-menu>
             </el-header>
             <el-main id="main">
@@ -39,26 +47,41 @@
       name: "HomePage",
       data () {
         return {
+          name: '',
           showMain: false,
           isCollapse: false
         }
       },
       mounted: function () {
+        var email = []
+        this.$axios.get('/api/currentuser').then(res => {
+          console.log('currentemail', res.data.data[0])
+          email.push({
+            'email': res.data.data[0]
+          })
+          return this.$axios.post('/api/currentuserinfo',email[0]).then(res => {
+            console.log('currentinfo', res)
+            console.log('e')
+            this.name = res.data.data[0].name
+          })
+        })
         this.showMain = true
       },
+      methods:{
+        layout(){
+          this.$axios.post('/api/logout').then(res => {
+            console.log('lagout', res)
+          })
+          location.reload()
+        }
+      }
     }
 </script>
 
 <style scoped>
   #main	{
-
     padding:0;
   }
-  h1 {
-    font-family: Georgia;
-    font-size:30px;
-  }
-
   #headleft{
     float: left;
   }
@@ -68,6 +91,7 @@
   }
   #headright{
     float: right;
+    margin-top: 10px;
   }
   .app_container_view{
     padding: 0px;
@@ -127,4 +151,7 @@
     font-size: 0.7em;
     color: #8d8d8d;
   }
+  a:link {color: black; text-decoration:none;}
+  a:visited {color:black; text-decoration:none;}
+
 </style>
