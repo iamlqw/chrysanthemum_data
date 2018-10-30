@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <div id="button">
-      <el-button type="primary" @click="add">添加</el-button>
+      <!--<el-button type="primary" @click="add">添加</el-button>-->
 
       <el-dialog title="添加信息" :visible.sync="dialogAddFormVisible">
         <el-form :model="addform">
@@ -16,10 +16,10 @@
       </el-dialog>
     </div>
     <div id="table">
-      <el-table
-        :data="list"
+      <el-table id="table"
+        :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         border
-        style="width: 80%">
+        style="width: 100%">
         <el-table-column
           prop="cultivar_name"
           label="品种名">
@@ -34,20 +34,21 @@
         </el-table-column>
         <el-table-column
           fixed="right"
-          label="详情">
+          label="操作">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-
+            <el-button @click="handleClick(scope.row)" type="text" size="small">详细信息</el-button>
             <el-button type="text" size="small">编辑</el-button>
-            <el-button @click="downloadClick(scope.row)" type="text" size="small">下载</el-button>
+            <el-button @click="downloadClick(scope.row)" type="text" size="small">邮件接收数据</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        :page-size="2"
-        :pager-count="11"
-        layout="prev, pager, next"
-        :total="1000">
+      <el-pagination id="pagination"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"
+        :page-sizes="[5, 10, 20, 40]"
+        :page-size="pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="list.length">
       </el-pagination>
     </div>
     <el-dialog title="查找信息" width="70%" :visible.sync="dialogLookupFormVisible">
@@ -74,14 +75,17 @@
             field_id: ''
           },
           dialogLookupFormVisible: false,
-          pagesize: 10,
+          //分页数据
+          pagesize: 5,
+          currentPage:1,
+          total:0,
         }
       },
       components: {
         'v-old': OldDetailInformation
       },
       methods:{
-        handleClick(row) {
+        handleClick(row) {//详细信息
           console.log('currentemail', this.email)
           console.log('row',row)
           this.olddata=row
@@ -98,7 +102,7 @@
             })
           this.dialogLookupFormVisible = true
         },
-        downloadClick(row){
+        downloadClick(row){//图片打包下载
           console.log('currentemail', this.email)
           this.$axios({
             method: 'post',
@@ -114,8 +118,14 @@
 
           })
         },
-        add(){
-          alert(this.email)
+        // add(){
+        //   alert(this.email)
+        // },
+        handleCurrentChange(val){
+          this.currentPage = val;
+        },
+        handleSizeChange(val){
+          this.pagesize = val;
         }
       },
       props:['result'],
@@ -124,6 +134,7 @@
         VueEvent.$on('to-list',function (data) {
           console.log('tolist',data)
           _this.list = data
+          _this.total = this.list.length
           console.log('list',this.list)
         })
         this.$axios.get('/api/currentuser').then(res => {
@@ -132,8 +143,10 @@
       },
       watch: {
         result: function () {
-          console.log('result',this.result)
+          console.log('result',this.result.length)
           this.list = this.result
+          this.total = this.list.length
+          console.log('total',this.total)
         },
       }
 
@@ -146,7 +159,11 @@
     width: 30%;
   }
   #table{
-    float: right;
+    margin: 0 auto;
     width: 90%;
+  }
+  #pagination{
+    text-align:center;
+    margin-top:30px;
   }
 </style>

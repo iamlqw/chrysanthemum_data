@@ -15,19 +15,19 @@
         <el-input v-model="email" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="联系方式"  prop="phone">
-        <el-input v-model="phone" :disabled="changeinfo"></el-input>
+        <el-input v-model="phone" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="年龄">
-        <el-input v-model="age" :disabled="changeinfo"></el-input>
+        <el-input v-model="age" :disabled="true"></el-input>
       </el-form-item>
       <el-form-item label="性别">
-        <el-select v-model="sex" placeholder="请选择用户性别" :disabled="changeinfo">
+        <el-select v-model="sex" placeholder="请选择用户性别" :disabled="true">
           <el-option label="男" value="男"></el-option>
           <el-option label="女" value="女"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="身份">
-        <el-select v-model="rolesname" placeholder="请选择身份" :disabled="changeinfo">
+        <el-select v-model="rolesname" placeholder="请选择身份" :disabled="true">
           <el-option label="管理员" value="男"></el-option>
           <el-option label="用户" value="女"></el-option>
         </el-select>
@@ -63,7 +63,7 @@
     <!--</el-row>-->
     <!--<el-button type="text" @click="layout" >注销</el-button>-->
   <!--</div>-->
-  </div>
+  <!--</div>-->
 </template>
 
 <script>
@@ -110,26 +110,8 @@
 </script>
 
 <style scoped>
-  #data{
-    width: 100%;
-    height: 3000px;
-    text-align: left;
-    background: white;
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
+#info{
+  background: white;
+  height: 100%;
+}
 </style>

@@ -67,7 +67,8 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="花属性指标检索:">
-      <el-select v-model="selectedIndexes"
+      <el-select style="width: 300px;"
+                 v-model="selectedIndexes"
                  multiple
                  filterable
                  placeholder="请选择"

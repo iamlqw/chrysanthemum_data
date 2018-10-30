@@ -1,8 +1,8 @@
 <template>
 
-  <el-container class="app_container_view">
+  <el-container class="app_container_view" >
     <!--<h1>菊花数据管理平台</h1>-->
-    <el-header height="12%">
+    <el-header height="11%">
       <transition name="slideDown">
         <el-card class="header-box-card">
           <span style="color: #696969; font-size:40px">菊花数据管理平台</span>
@@ -22,22 +22,24 @@
       <transition name="fadeUp">
         <el-card class="main-box-card" v-show="showMain">
           <el-container>
-            <el-header id="headleft">
-              <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-                <el-menu-item><router-link to='/homepage/data'>数据</router-link></el-menu-item>
-              </el-menu>
-            </el-header>
+            <!--<el-header id="headleft">-->
+              <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">-->
+                <!--<el-menu-item><router-link to='/homepage/data'>数据</router-link></el-menu-item>-->
+              <!--</el-menu>-->
+            <!--</el-header>-->
             <el-main id="main">
-              <el-card><router-view></router-view></el-card>
+              <router-view></router-view>
             </el-main>
           </el-container>
         </el-card>
       </transition>
     </el-main>
+    <el-footer height="5.4%">
     <el-card class="footer-card">
       <p> 菊花数据管理平台 </p>
       <p class="copyright">2018 Copyright 北京林业大学</p>
     </el-card>
+    </el-footer>
   </el-container>
 
 </template>
@@ -94,6 +96,7 @@
     margin-top: 10px;
   }
   .app_container_view{
+    /*background: url('../assets/img/school.jpg') center center no-repeat;*/
     padding: 0px;
     height: 900px;
   }

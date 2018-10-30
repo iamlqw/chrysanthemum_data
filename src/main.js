@@ -38,10 +38,10 @@ const routes = [
     {
       path:'data',
       component:Data,
-      children:[
-        { path:'newindextable',component:NewIndexTable},
-        { path:'oldindextable',component:OldIndexTable}
-      ]
+        // children:[
+        //   { path:'newindextable',component:NewIndexTable},
+        //   { path:'oldindextable',component:OldIndexTable}
+        // ]
     }
   ]
   },
