@@ -1,7 +1,12 @@
 <template>
   <div>
     <div id="picture">
-      <img :onerror="errpic" class="customerHead" :src="src" width="420" height="420">
+      <el-carousel :interval="4000" type="card" height="200px">
+        <el-carousel-item v-for="item in src.length" :key="item">
+          <!--<h2>{{item}}</h2>-->
+          <img :onerror="errpic" class="customerHead" :src="src[item]" width="420" height="420">
+        </el-carousel-item>
+      </el-carousel>
     </div>
     <el-collapse v-model="activeNames" @change="handleChange">
       <el-collapse-item  id="list" title="基本信息：" name="1">
@@ -329,7 +334,7 @@
       components: {IndexTable},
       data(){
           return {
-            src:'',
+            src:[],
             param:{
               id:"",
               customerHead: "",
@@ -338,26 +343,13 @@
       },
       props:['olddata','baseCode'],
       mounted(){
-        // let _this = this
-        // let files = Base64[0].base64
-        // if (files.size/(1024*1024) > 2) {
-        //   this.open('上传的图片不可大于2M！')
-        //   return false;
-        // }
-        // var reader = new FileReader();
-        // reader.onload = function (e) {
-        //   var base64 = e.target.result;
-        //   _this.param.customerHead = files
-//console.log(base64)
-//         }
-//         if(files) {
-//           reader.readAsDataURL(files);
-//         }
       },
       watch:{
         baseCode: function () {
-          console.log('cbasecode',this.baseCode)
-          this.src = 'data:image/jpeg;base64,'+this.baseCode
+          for (var i=0;i<this.baseCode.length;i++){
+            this.src[i] = 'data:image/jpeg;base64,'+this.baseCode[i]
+          }
+          console.log('src',this.src)
         },
       }
     }

@@ -70,7 +70,8 @@
           list:[],
           dialogAddFormVisible: false,
           olddata: [],
-          baseCode: '',
+          baseCodeData: [],
+          baseCode: [],
           addform:{
             field_id: ''
           },
@@ -97,8 +98,11 @@
                 cultivar_id: [row.id]
               }
             }).then(res => {
-              //console.log('baseCode', res.data.pic['cultivar'+row.id][0][0].base64)
-              this.baseCode=res.data.pic['cultivar'+row.id][0][0].base64
+              console.log('baseCode', res.data.pic['cultivar'+row.id][0].length)
+              for(var i=0;i<res.data.pic['cultivar'+row.id][0].length;i++){
+                this.baseCodeData[i]=res.data.pic['cultivar'+row.id][0][i].base64
+              }
+              this.baseCode=this.baseCodeData//由于监听器监听baseCode，只能让baseCode改变一次
             })
           this.dialogLookupFormVisible = true
         },
