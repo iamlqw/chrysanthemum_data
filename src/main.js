@@ -71,9 +71,6 @@ router.beforeEach((to, from, next) => {
     }else{
       next()
     }
-
-
-
   //   else {
   //     info = res.data.data[0]
   //     email.push({

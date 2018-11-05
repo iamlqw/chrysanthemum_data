@@ -111,12 +111,19 @@
               email: this.email,
               classification: 'artificial',
               id:[row.id],
-              quality:'high'
+              quality:'high',
+              type:'download'
             }
           }).then(res => {
             console.log('sendemail', res.data)
 
           })
+          // this.$axios({
+          //   method:'get',
+          //   url: '/api/download'
+          // }).then(res => {
+          //   console.log('哈哈哈哈')
+          // })
         },
         // add(){
         //   alert(this.email)
