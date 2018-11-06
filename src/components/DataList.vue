@@ -2,7 +2,6 @@
   <div id="main">
     <div id="button">
       <!--<el-button type="primary" @click="add">添加</el-button>-->
-
       <el-dialog title="添加信息" :visible.sync="dialogAddFormVisible">
         <el-form :model="addform">
           <el-form-item label="基地编号" :label-width="formLabelWidth">
@@ -16,7 +15,8 @@
       </el-dialog>
     </div>
     <div id="table">
-      <el-table id="table"
+      <el-table
+        id="table"
         :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         border
         style="width: 100%">
@@ -89,6 +89,7 @@
         handleClick(row) {//详细信息
           console.log('currentemail', this.email)
           console.log('row',row)
+          this.baseCode=[]
           this.olddata=row
             this.$axios({
               method: 'post',
@@ -98,11 +99,11 @@
                 cultivar_id: [row.id]
               }
             }).then(res => {
-              console.log('baseCode', res.data.pic['cultivar'+row.id][0].length)
               for(var i=0;i<res.data.pic['cultivar'+row.id][0].length;i++){
-                this.baseCodeData[i]=res.data.pic['cultivar'+row.id][0][i].base64
+                this.baseCodeData[i]='data:image/jpeg;base64,'+res.data.pic['cultivar'+row.id][0][i].base64
               }
               this.baseCode=this.baseCodeData//由于监听器监听baseCode，只能让baseCode改变一次
+              console.log('baseCode', this.baseCode)
             })
           this.dialogLookupFormVisible = true
         },
@@ -119,15 +120,12 @@
               type:'download'
             }
           }).then(res => {
-            console.log('sendemail', res.data)
-
+            if (res.data.status=='success'){
+                window.open('/api/download?email='+this.email)
+            }
+            //console.log('sendemail', res.data)
           })
-          // this.$axios({
-          //   method:'get',
-          //   url: '/api/download'
-          // }).then(res => {
-          //   console.log('哈哈哈哈')
-          // })
+
         },
         // add(){
         //   alert(this.email)

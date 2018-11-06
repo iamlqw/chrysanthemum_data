@@ -1,10 +1,13 @@
 <template>
   <div>
     <div id="picture">
-      <el-carousel :interval="4000" type="card" height="200px">
-        <el-carousel-item v-for="item in src.length" :key="item">
+      <el-carousel :interval="4000"
+                   type="card"
+                   id="slide"
+                   >
+        <el-carousel-item v-for="item in baseCode.length" :key="item">
           <!--<h2>{{item}}</h2>-->
-          <img :onerror="errpic" class="customerHead" :src="src[item]" width="420" height="420">
+          <img :onerror="errpic" class="customerHead" :src="baseCode[item-1]" width="420" height="420">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -334,7 +337,6 @@
       components: {IndexTable},
       data(){
           return {
-            src:[],
             param:{
               id:"",
               customerHead: "",
@@ -345,12 +347,12 @@
       mounted(){
       },
       watch:{
-        baseCode: function () {
-          for (var i=0;i<this.baseCode.length;i++){
-            this.src[i] = 'data:image/jpeg;base64,'+this.baseCode[i]
-          }
-          console.log('src',this.src)
-        },
+        // baseCode: function () {
+        //   for (var i=0;i<this.baseCode.length;i++){
+        //     this.src[i] = 'data:image/jpeg;base64,'+this.baseCode[i]
+        //   }
+        //   console.log('src',this.src)
+        // },
       }
     }
 </script>
@@ -362,5 +364,8 @@
   }
   #list div{
     padding-left: 5%;
+  }
+  #slide{
+    margin:0 15% 0 15%;
   }
 </style>

@@ -50,6 +50,7 @@ const routes = [
 
 //实例化
 var router = new VueRouter({
+  // mode:'history',
   routes
 })
 

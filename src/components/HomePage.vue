@@ -12,7 +12,20 @@
           </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item><router-link to='/homepage/usersinfo'>用户信息</router-link></el-dropdown-item>
-            <el-dropdown-item><el-buttom @click="layout()">注销</el-buttom></el-dropdown-item>
+            <el-dropdown-item>
+              <el-popover
+                placement="top"
+                width="160"
+                v-model="visible2">
+                <p>确认注销？</p>
+                <div style="text-align: right; margin: 0">
+                  <el-button size="mini" type="text" @click="visible2 = false">取消</el-button>
+                  <el-button type="primary" size="mini" @click="layout()">确定</el-button>
+                </div>
+                  <el-buttom slot="reference">注销</el-buttom>
+              </el-popover>
+
+            </el-dropdown-item>
           </el-dropdown-menu>
           </el-dropdown>
         </el-card>
@@ -50,6 +63,7 @@
       data () {
         return {
           name: '',
+          visible2: false,//注销弹窗
           showMain: false,
           isCollapse: false
         }
@@ -74,6 +88,7 @@
           this.$axios.post('/api/logout').then(res => {
             console.log('lagout', res)
           })
+          this.visible2 = false
           location.reload()
         }
       }
