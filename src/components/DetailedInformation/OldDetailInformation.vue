@@ -70,10 +70,10 @@
           <tr>
             <td><div>花的香气类型：{{olddata.aroma_type_of_flowers}}</div></td>
             <td><div>花托形状：{{olddata.torus_shape}}</div></td>
+            <td><div>花型:{{olddata.flower_type}}</div></td>
           </tr>
           <tr>
-          <td><div>花型:{{olddata.flower_type}}</div></td>
-          <td><div>花色系统:{{olddata.color_system}}</div></td>
+            <td><div>花色系统:{{olddata.color_system}}</div></td>
           </tr>
         </table>
       </el-collapse-item>
@@ -122,7 +122,6 @@
           <tr>
             <td><div>纵向棱的明显程度:{{olddata.extent_of_the_longitudinal_edge}}</div></td>
             <td><div>叶裂刻基部突起:{{olddata.leaf_cracking_base_protrusion}}</div></td>
-            <td><div></div></td>
           </tr>
         </table>
       </el-collapse-item>
@@ -331,7 +330,6 @@
 </template>
 <script>
   import IndexTable from "../IndexTable/NewIndexTable";
-  let Base64 = require('js-base64').Base64;
     export default {
         name: "OldDetailInformation",
       components: {IndexTable},
@@ -363,7 +361,7 @@
     margin: 0 auto;
   }
   #list div{
-    padding-left: 5%;
+    margin-left: 5%;
   }
   #slide{
     margin:0 15% 0 15%;

@@ -37,8 +37,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">详细信息</el-button>
-            <el-button type="text" size="small">编辑</el-button>
-            <el-button @click="downloadClick(scope.row)" type="text" size="small">邮件接收数据</el-button>
+            <el-button @click="downloadClick(scope.row)" type="text" size="small">下载数据</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -59,7 +58,6 @@
 </template>
 
 <script>
-  let Base64 = require('js-base64').Base64;
   import VueEvent from '../model/VueEvent.js'
   import OldDetailInformation from '../components/DetailedInformation/OldDetailInformation'
     export default {
@@ -139,6 +137,22 @@
       },
       props:['result'],
       mounted(){
+        //初始化显示所有数据
+        // this.$axios.get('/api/currentuser').then(res => {
+        //   console.log('currentemail', res.data.data[0])
+        //   this.email= res.data.data[0]
+        // })
+        // this.$axios({
+        //   method: 'post',
+        //   url: '/api/getcharacterbyname',
+        //   data: {
+        //     email: this.email,
+        //     cultivar_name: ''
+        //   }
+        // }).then(res => {
+        //    this.list=res.data.data
+        // })
+        // 获取指标检索数据展示
         var _this = this;//this指代当前对象，在VueEvent内部为VueEvent
         VueEvent.$on('to-list',function (data) {
           console.log('tolist',data)
@@ -151,6 +165,7 @@
         })
       },
       watch: {
+        //获取模糊检索数据展示
         result: function () {
           console.log('result',this.result.length)
           this.list = this.result

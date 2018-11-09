@@ -1,7 +1,7 @@
 <template>
     <div id="login">
       <div class="page-container">
-        <h1>登陆</h1>
+        <h1>菊花数据管理平台</h1>
         <el-form :model="loginform">
           <input type="text" v-model="loginform.email" class="username" placeholder="邮箱">
           <input type="password" v-model="loginform.password" class="password" placeholder="密码">

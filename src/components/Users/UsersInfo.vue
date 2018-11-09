@@ -47,8 +47,8 @@
       </el-form-item>
       <el-form-item label="性别">
         <el-select v-model="reMassageform.sex" placeholder="请选择用户性别" :disabled="changeinfo">
-          <el-option label="男" value="男"></el-option>
-          <el-option label="女" value="女"></el-option>
+          <el-option label="男" value="1"></el-option>
+          <el-option label="女" value="0"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="身份">
@@ -163,14 +163,22 @@
                 this.rePasswordform
                 //向后端传递参数
               ).then(res => {
-                console.log(res)
+                if(res.data.status=='failed'){
+                  this.$alert('原密码有误！')
+                }else if(res.data.status=='success'){
+                  this.$alert('修改成功！')
+                  this.rePswdialogVisible = false
+                  this.rePasswordform=''
+                  this.re_pwd=''
+                }
+                console.log(res.data)
               })
             }
           },
           changeInfo(){
-            this.reMassageform.id=
+            console.log(this.reMassageform)
             this.$axios.post(
-              '/api/updateUserlnfo',
+              '/api/updateUserInfo',
               this.reMassageform
               //向后端传递参数
             ).then(res => {
