@@ -8,7 +8,7 @@
           <input type="text" style="width:145px" v-model="loginform.captcha" class="captcha" placeholder="验证码">
           <img :src="codeUrl" @click="onRefreshCode()">
 
-          <button type="submit" @click="login()">登陆</button>
+          <button type="submit" @click="login()">登录</button>
           <button type="submit" @click="dialogRegisterFormVisible = true">注册</button>
           <div class="error"><span>+</span></div>
         </el-form>

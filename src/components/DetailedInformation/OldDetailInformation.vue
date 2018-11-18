@@ -345,12 +345,6 @@
       mounted(){
       },
       watch:{
-        // baseCode: function () {
-        //   for (var i=0;i<this.baseCode.length;i++){
-        //     this.src[i] = 'data:image/jpeg;base64,'+this.baseCode[i]
-        //   }
-        //   console.log('src',this.src)
-        // },
       }
     }
 </script>

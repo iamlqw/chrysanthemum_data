@@ -14,6 +14,7 @@ Vue.use(VueRouter)
 //引入element-ui
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+//import './assets/css/theme/index.css'
 Vue.use(ElementUI)
 
 //引入axios
@@ -25,10 +26,10 @@ let Base64 = require('js-base64').Base64;
 //创建组件
 import HomePage from './components/HomePage.vue'
   import UsersInfo from './components/Users/UsersInfo.vue'
-import Login from './components/Users/Login.vue'
-import Data from './components/Data.vue'
-  import NewIndexTable from './components/IndexTable/NewIndexTable.vue'
-  import OldIndexTable from './components/IndexTable/OldIndexTable.vue'
+  import Login from './components/Users/Login.vue'
+  import Data from './components/Data.vue'
+    import OldDataList from './components/DataList/OldDataList.vue'
+    import NewDataList from './components/DataList/NewDataList.vue'
 //配置路由
 const routes = [
   { path:'/homepage',
@@ -38,10 +39,14 @@ const routes = [
     {
       path:'data',
       component:Data,
-        // children:[
-        //   { path:'newindextable',component:NewIndexTable},
-        //   { path:'oldindextable',component:OldIndexTable}
-        // ]
+        children:[
+          { path:'newdatalist',component:NewDataList,meta: {
+              keepAlive: true // 需要被缓存
+            }},
+          { path:'olddatalist',component:OldDataList,meta: {
+              keepAlive: true // 需要被缓存
+            }}
+        ]
     }
   ]
   },

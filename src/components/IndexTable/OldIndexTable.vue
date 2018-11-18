@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-left: 50px">
     <el-form ref="form" :model="form" label-width="150px">
     <el-form-item label="舌状花的重瓣性:">
       <el-checkbox-group v-model="form.ray_florets_flaps">
@@ -67,41 +67,22 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="花属性指标检索:">
-      <el-select style="width: 300px;"
-                 v-model="selectedIndexes"
-                 multiple
-                 filterable
-                 placeholder="请选择"
-                 @change="onIndexesSelectChange"
-                 collapse-tags
-                 size="large">
-        <el-option
-          v-for="item in options"
-          :key="item.key"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <!--<el-checkbox-group v-model="form.attribute_index">-->
-        <!--<el-checkbox label="植株高度（cm）" name="type"></el-checkbox>-->
-        <!--<el-checkbox label="花径大小（cm）" name="type"></el-checkbox>-->
-        <!--<el-checkbox label="筒状花部直径（mm）" name="type"></el-checkbox>-->
-        <!--<el-checkbox label="花瓣长度（cm）" name="type"></el-checkbox>-->
-        <!--<el-checkbox label="花瓣宽度（cm）" name="type"></el-checkbox>-->
-        <!--<el-checkbox label="叶片长（cm）" name="type"></el-checkbox>-->
-        <!--<el-checkbox label="叶片宽（cm）" name="type"></el-checkbox>-->
-      <!--</el-checkbox-group>-->
-      <el-col id="indexRange">
-          <template >
-            <el-col v-for="item in showIndexes" :xs="24" :sm="24" :md="12" :lg="12" style="padding-left: 2%"  :key="index+'in19'">
-                <div class="range">
+      <el-radio-group ref="select" v-model="showIndexes" >
+        <el-checkbox v-model="showIndexes" label="plant_height">植株高度（cm）</el-checkbox>
+        <el-checkbox v-model="showIndexes" label="flower_diameter">花径大小（cm）</el-checkbox>
+        <el-checkbox v-model="showIndexes" label="disc_florets_diameter">筒状花部直径（mm）</el-checkbox>
+        <el-checkbox v-model="showIndexes" label="petal_length">花瓣长度（cm）</el-checkbox>
+        <el-checkbox v-model="showIndexes" label="petal_width">花瓣宽度（cm）</el-checkbox>
+        <el-checkbox v-model="showIndexes" label="leaf_length">叶片长（cm）</el-checkbox>
+        <el-checkbox v-model="showIndexes" label="leaf_width">叶片宽（cm）</el-checkbox>
+      </el-radio-group>
+      <ul>
+            <li v-for="item in showIndexes">
                   {{item}}:
                   <el-input-number v-model="form[item][0]" :min="0" :step="0.1"></el-input-number> ~
                   <el-input-number v-model="form[item][1]" :min="form[item][0]" :step="0.1"></el-input-number>
-                </div>
-            </el-col>
-          </template>
-      </el-col>
+            </li>
+      </ul>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="onSubmit()">检索</el-button>
@@ -116,38 +97,7 @@
       name: "IndexTable",
       data(){
         return{
-          selectedIndexes: [],
           showIndexes:[],
-          options: [
-            {
-              value: 'plant_height',
-              label: '植株高度（cm）',
-            },
-            {
-              value: 'flower_diameter',
-              label: '花径大小（cm）'
-            },
-            {
-              value: 'disc_florets_diameter',
-              label: '筒状花部直径（mm）'
-            },
-            {
-            value: 'petal_length',
-            label: '花瓣长度（cm）'
-            },
-            {
-            value: 'petal_width',
-            label: '花瓣宽度（cm）'
-            },
-            {
-            value: 'leaf_length',
-            label: '叶片长（cm）'
-            },
-            {
-            value: 'leaf_width:',
-            label: '叶片宽（cm）'
-            }
-          ],
           value: '',
           form: {
             email:'',
@@ -168,9 +118,6 @@
         }
       },
       methods:{
-        onIndexesSelectChange () {
-          this.showIndexes = this.selectedIndexes
-        },
         onSubmit(){
           this.$axios.get('/api/currentuser').then(res => {
             console.log('currentemail', res.data.data[0])
@@ -183,10 +130,16 @@
           ).then(res => {
             console.log('result', res.data.data)
             this.result=res.data.data
-            VueEvent.$emit('to-list',res.data.data)
+            VueEvent.$emit('index-to-oldlist',res.data.data)
           })
         }
       },
+      /*测试*/
+      watch:{
+        showIndexes: function () {
+          console.log(this.showIndexes)
+        }
+      }
     }
 </script>
 

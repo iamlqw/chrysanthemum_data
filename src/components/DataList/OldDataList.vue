@@ -1,20 +1,22 @@
 <template>
   <div id="main">
-    <div id="button">
+    <!--<div id="button">-->
       <!--<el-button type="primary" @click="add">添加</el-button>-->
-      <el-dialog title="添加信息" :visible.sync="dialogAddFormVisible">
-        <el-form :model="addform">
-          <el-form-item label="基地编号" :label-width="formLabelWidth">
-            <el-input v-model="addform.field_id" autocomplete="off"></el-input>
-          </el-form-item>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogLoginFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogLoginFormVisible = false">确 定</el-button>
-          </div>
-        </el-form>
-      </el-dialog>
-    </div>
+      <!--<el-dialog title="添加信息" :visible.sync="dialogAddFormVisible">-->
+        <!--<el-form :model="addform">-->
+          <!--<el-form-item label="基地编号" :label-width="formLabelWidth">-->
+            <!--<el-input v-model="addform.field_id" autocomplete="off"></el-input>-->
+          <!--</el-form-item>-->
+          <!--<div slot="footer" class="dialog-footer">-->
+            <!--<el-button @click="dialogLoginFormVisible = false">取 消</el-button>-->
+            <!--<el-button type="primary" @click="dialogLoginFormVisible = false">确 定</el-button>-->
+          <!--</div>-->
+        <!--</el-form>-->
+      <!--</el-dialog>-->
+    <!--</div>-->
+    <el-button type="primary" @click="Jump()" plain>新数据</el-button>
     <div id="table">
+      <p style="text-align: center;font-size: 40px">旧数据列表</p>
       <el-table
         id="table"
         :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)"
@@ -51,6 +53,7 @@
       </el-pagination>
     </div>
     <el-dialog title="查找信息" width="70%" :visible.sync="dialogLookupFormVisible">
+      <!--<v-old :olddata="olddata":baseCode="baseCode"></v-old>-->
       <v-old :olddata="olddata":baseCode="baseCode"></v-old>
     </el-dialog>
   </div>
@@ -58,10 +61,11 @@
 </template>
 
 <script>
-  import VueEvent from '../model/VueEvent.js'
-  import OldDetailInformation from '../components/DetailedInformation/OldDetailInformation'
+  import VueEvent from '../../model/VueEvent.js'
+  import OldDetailInformation from '../DetailedInformation/OldDetailInformation'
+  import NewDetailInformation from '../DetailedInformation/NewDetailInformation'
     export default {
-      name: "DataList",
+      name: "OldDataList",
       data() {
         return {
           email:'',
@@ -81,9 +85,13 @@
         }
       },
       components: {
-        'v-old': OldDetailInformation
+        'v-old': OldDetailInformation,
+        'v-new': NewDetailInformation
       },
       methods:{
+        Jump(){
+          this.$router.push({path:'newdatalist'})
+        },
         handleClick(row) {//详细信息
           console.log('currentemail', this.email)
           console.log('row',row)
@@ -154,7 +162,13 @@
         // })
         // 获取指标检索数据展示
         var _this = this;//this指代当前对象，在VueEvent内部为VueEvent
-        VueEvent.$on('to-list',function (data) {
+        VueEvent.$on('data-to-oldlist',function (data) {
+          console.log('tolist',data)
+          _this.list = data
+          _this.total = this.list.length
+          console.log('list',this.list)
+        })
+        VueEvent.$on('index-to-oldlist',function (data) {
           console.log('tolist',data)
           _this.list = data
           _this.total = this.list.length
@@ -164,15 +178,15 @@
           this.email = res.data.data[0]
         })
       },
-      watch: {
-        //获取模糊检索数据展示
-        result: function () {
-          console.log('result',this.result.length)
-          this.list = this.result
-          this.total = this.list.length
-          console.log('total',this.total)
-        },
-      }
+      // watch: {
+      //   //获取模糊检索数据展示
+      //   result: function () {
+      //     console.log('result',this.result)
+      //     this.list = this.result
+      //     this.total = this.list.length
+      //     console.log('total',this.total)
+      //   },
+      // }
 
     }
 </script>

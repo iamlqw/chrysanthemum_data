@@ -1,44 +1,42 @@
 <template>
-  <div>
-    <el-form ref="form" :model="form" label-width="150px">
-      <el-form-item label="花属性指标检索:">
-        <el-checkbox-group v-model="form.attribute_index">
-          <el-checkbox label="R均值" name="type"></el-checkbox>
-          <el-checkbox label="R方差" name="type"></el-checkbox>
-          <el-checkbox label="G均值" name="type"></el-checkbox>
-          <el-checkbox label="G方差" name="type"></el-checkbox>
-          <el-checkbox label="B均值" name="type"></el-checkbox>
-          <el-checkbox label="B方差" name="type"></el-checkbox>
-          <el-checkbox label="H均值" name="type"></el-checkbox>
-          <el-checkbox label="H方差" name="type"></el-checkbox>
-          <el-checkbox label="S均值" name="type"></el-checkbox>
-          <el-checkbox label="S方差" name="type"></el-checkbox>
-          <el-checkbox label="V均值" name="type"></el-checkbox>
-          <el-checkbox label="V方差" name="type"></el-checkbox>
-          <el-checkbox label="L均值" name="type"></el-checkbox>
-          <el-checkbox label="L方差" name="type"></el-checkbox>
-          <el-checkbox label="a均值" name="type"></el-checkbox>
-          <el-checkbox label="a方差" name="type"></el-checkbox>
-          <el-checkbox label="b均值" name="type"></el-checkbox>
-          <el-checkbox label="均值" name="type"></el-checkbox>
-          <el-checkbox label="标准差" name="type"></el-checkbox>
-          <el-checkbox label="平滑度" name="type"></el-checkbox>
-          <el-checkbox label="三阶矩" name="type"></el-checkbox>
-          <el-checkbox label="一致性" name="type"></el-checkbox>
-          <el-checkbox label="菊花面积" name="type"></el-checkbox>
-          <el-checkbox label="分型维数" name="type"></el-checkbox>
-          <el-checkbox label="凸包面积" name="type"></el-checkbox>
-          <el-checkbox label="重心x" name="type"></el-checkbox>
-          <el-checkbox label="重心y" name="type"></el-checkbox>
-          <el-checkbox label="外接矩形宽度" name="type"></el-checkbox>
-          <el-checkbox label="外接矩形高度" name="type"></el-checkbox>
-          <el-checkbox label="斜外接矩形长" name="type"></el-checkbox>
-          <el-checkbox label="斜外接矩形宽" name="type"></el-checkbox>
-          <el-checkbox label="外接圆圆心x" name="type"></el-checkbox>
-          <el-checkbox label="外接圆圆心y" name="type"></el-checkbox>
-          <el-checkbox label="菊花半径" name="type"></el-checkbox>
-          <el-checkbox label="外接矩形高度" name="type"></el-checkbox>
-          <el-checkbox label="外接矩形高度" name="type"></el-checkbox>
+  <div style="padding-left: 50px">
+    <el-form ref="form" :model="form" label-width="200px">
+      <el-form-item label=" 需要用来检索的指标:">
+        <el-checkbox-group v-model="check_list">
+          <el-checkbox label="品种编号" @change="check_cid=!check_cid">品种编号</el-checkbox>
+          <el-checkbox label="株号" @change="check_pid=!check_pid"></el-checkbox>
+          <el-checkbox label="旋转次数" @change="check_r_num=!check_r_num"></el-checkbox>
+          <el-checkbox label="拍摄日期" @change="check_d=!check_d"></el-checkbox>
+        </el-checkbox-group>
+      </el-form-item>
+      <el-form-item>
+        <span class="demonstration">品种编号</span>
+        <el-input-number v-model="form.cultivar_id" :min="1" :max="1000" :disabled="!check_cid"></el-input-number>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="demonstration">株号</span>
+        <el-input-number v-model="form.plant_id" :min="1" :max="10" :disabled="!check_pid"></el-input-number>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="demonstration">旋转次数</span>
+        <el-input-number v-model="form.revolution_num"  :min="1" :max="10" :disabled="!check_r_num"></el-input-number>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <span class="demonstration">拍摄日期</span>
+        <el-date-picker
+          :disabled="!check_d"
+          v-model="form.date"
+          type="daterange"
+          align="right"
+          unlink-panels
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+          :picker-options="pickerOptions2">
+        </el-date-picker>
+      </el-form-item>
+      <el-form-item label="拍摄角度:">
+        <el-checkbox-group v-model="form.angle">
+          <el-checkbox label="仰视" name="仰视"></el-checkbox>
+          <el-checkbox label="侧视" name="侧视"></el-checkbox>
+          <el-checkbox label="俯视" name="俯视"></el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item>
@@ -53,10 +51,34 @@
       name: "IndexTable",
       data (){
           return{
+            check_list:[],
+            check_cid: false,
+            check_pid: false,
+            check_d: false,
+            check_r_num: false,
             form:{
-              attribute_index:[]
-            }
+              cultivar_id:null,
+              plant_id:null,
+              angle:[null],
+              revolution_num:null,
+              date:[null]
+            },
+            result:''
           }
+      },
+      methods:{
+        onSubmit(){
+          console.log('newresult', this.form)
+          this.$axios.post(
+            '/api/Instrument/getOriginInfoByIndex',
+            this.form
+            //向后端传递参数
+          ).then(res => {
+            console.log('newresult', res.data)
+            this.result=res.data.data
+            VueEvent.$emit('index-to-newlist',res.data.data)
+          })
+        }
       }
     }
 </script>
