@@ -61,10 +61,10 @@
       </el-checkbox-group>
     </el-form-item>
     <el-form-item label="品种年代:">
-      <el-radio-group v-model="form.age_of_cultivar">
+      <el-checkbox-group v-model="form.age_of_cultivar">
         <el-checkbox label="传统" name="传统"></el-checkbox>
         <el-checkbox label="现代" name="现代"></el-checkbox>
-      </el-radio-group>
+      </el-checkbox-group>
     </el-form-item>
     <el-form-item label="花属性指标检索:">
       <el-radio-group ref="select" v-model="showIndexes" >
@@ -123,6 +123,7 @@
             console.log('currentemail', res.data.data[0])
             this.form.email= res.data.data[0]
           })
+          console.log('oldindex',this.form)
           this.$axios.post(
             '/api/getcharacterbyindex',
             this.form

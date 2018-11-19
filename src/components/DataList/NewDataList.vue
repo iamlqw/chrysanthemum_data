@@ -50,8 +50,8 @@
           fixed="right"
           label="操作">
           <template slot-scope="scope">
-            <el-button type="text" size="small">查看原图</el-button>
-            <el-button type="text" size="small">LBP图像</el-button>
+            <el-button type="text" size="small" @click="OriginalImageView(scope.row)">查看原图</el-button>
+            <el-button type="text" size="small" @click="LBPImageView(scope.row)">LBP图像</el-button>
             <el-button type="text" size="small">查看数据</el-button>
             <el-button type="text" size="small">获取数据</el-button>
           </template>
@@ -66,24 +66,37 @@
                      :total="list.length">
       </el-pagination>
     </div>
-    <!--<el-dialog title="查找信息" width="70%" :visible.sync="dialogLookupFormVisible">-->
-      <!--&lt;!&ndash;<v-old :olddata="olddata":baseCode="baseCode"></v-old>&ndash;&gt;-->
-      <!--<v-old :olddata="olddata":baseCode="baseCode"></v-old>-->
-    <!--</el-dialog>-->
+    <el-dialog title="查看原图" width="70%" :visible.sync="imgLookupFormVisible">
+      <v-newimg :baseCode="baseCode"></v-newimg>
+    </el-dialog>
+    <el-dialog title="查看LBP图像" width="70%" :visible.sync="lbpimgLookupFormVisible">
+      <v-newlbpimg :lbpbaseCode="lbpbaseCode"></v-newlbpimg>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import VueEvent from '../../model/VueEvent.js'
+  import NewDataOriginalImageView from '../DetailedInformation/NewDataOriginalImageView'
+  import NewDataLBPImgView from '../DetailedInformation/NewDataLBPImgView'
     export default {
         name: "NewDataList",
         data(){
           return{
+            email:'',
             list:[],
             pagesize: 5,
             currentPage:1,
             total:0,
+            baseCode:'',
+            lbpbaseCode:'',
+            imgLookupFormVisible:false,
+            lbpimgLookupFormVisible:false
           }
+        },
+        components: {
+          'v-newimg': NewDataOriginalImageView,
+          'v-newlbpimg': NewDataLBPImgView
         },
         methods: {
           //跳转
@@ -97,6 +110,40 @@
           //改变页尺寸
           handleSizeChange(val){
             this.pagesize = val;
+          },
+          //查看原图
+          OriginalImageView(row){
+            this.$axios({
+              method: 'post',
+              url: '/api/Instrument/getOriginPic',
+              data: {
+                email: this.email,
+                id: [row.id]
+              }
+            }).then(res => {
+               console.log('res', res.data.data)
+              this.baseCode='data:image/jpeg;base64,'+res.data.data[row.id]
+            })
+            this.imgLookupFormVisible = true
+          },
+          //查看LBP图像
+          LBPImageView(row){
+            this.$axios({
+              method: 'post',
+              url: '/api/Instrument/getProcessPic',
+              data: {
+                email: this.email,
+                cultivar_id: row.cultivar_id,
+                plant_id:row.plant_id,
+                pic_date:row.pic_date,
+                angle:row.angle,
+                revolution_num:row.revolution_num
+              }
+            }).then(res => {
+              console.log('res', res.data.pic.LBP)
+              this.lbpbaseCode='data:image/jpeg;base64,'+res.data.pic.LBP
+            })
+            this.lbpimgLookupFormVisible = true
           }
         },
       mounted(){
@@ -105,16 +152,16 @@
         VueEvent.$on('data-to-newlist',function (data) {
           console.log('newtolist',data)
           _this.list = data
-          _this.total = this.list.length
+          _this.total = data.length
           console.log('list',this.list)
         })
         //接收新数据（索引表）
-        // VueEvent.$on('index-to-newlist',function (data) {
-        //   console.log('tolist',data)
-        //   _this.list = data
-        //   _this.total = this.list.length
-        //   console.log('list',this.list)
-        // })
+        VueEvent.$on('index-to-newlist',function (data) {
+          console.log('tolist',data)
+          _this.list = data
+          _this.total = data.length
+          console.log('list',this.list)
+        })
         this.$axios.get('/api/currentuser').then(res => {
           this.email = res.data.data[0]
         })

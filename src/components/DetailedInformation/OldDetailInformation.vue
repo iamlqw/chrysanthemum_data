@@ -7,7 +7,7 @@
                    >
         <el-carousel-item v-for="item in baseCode.length" :key="item">
           <!--<h2>{{item}}</h2>-->
-          <img :onerror="errpic" class="customerHead" :src="baseCode[item-1]" width="420" height="420">
+          <img :onerror="errpic" class="customerHead" :src="baseCode[item-1]" width="300" height="300">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -331,7 +331,7 @@
 <script>
   import IndexTable from "../IndexTable/NewIndexTable";
     export default {
-        name: "OldDetailInformation",
+      name: "OldDetailInformation",
       components: {IndexTable},
       data(){
           return {
@@ -353,6 +353,7 @@
 
   #picture{
     margin: 0 auto;
+    width: 90%;
   }
   #list div{
     margin-left: 5%;

@@ -86,7 +86,6 @@
       },
       components: {
         'v-old': OldDetailInformation,
-        'v-new': NewDetailInformation
       },
       methods:{
         Jump(){
@@ -105,8 +104,8 @@
                 cultivar_id: [row.id]
               }
             }).then(res => {
-              for(var i=0;i<res.data.pic['cultivar'+row.id][0].length;i++){
-                this.baseCodeData[i]='data:image/jpeg;base64,'+res.data.pic['cultivar'+row.id][0][i].base64
+              for(var i=0;i<res.data.pic[row.id].length;i++){
+                this.baseCodeData[i]='data:image/jpeg;base64,'+res.data.pic[row.id][i].base64
               }
               this.baseCode=this.baseCodeData//由于监听器监听baseCode，只能让baseCode改变一次
               console.log('baseCode', this.baseCode)
@@ -165,13 +164,13 @@
         VueEvent.$on('data-to-oldlist',function (data) {
           console.log('tolist',data)
           _this.list = data
-          _this.total = this.list.length
+          _this.total = data.length
           console.log('list',this.list)
         })
         VueEvent.$on('index-to-oldlist',function (data) {
           console.log('tolist',data)
           _this.list = data
-          _this.total = this.list.length
+          _this.total = data.length
           console.log('list',this.list)
         })
         this.$axios.get('/api/currentuser').then(res => {

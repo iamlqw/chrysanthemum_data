@@ -11,13 +11,13 @@
       </el-form-item>
       <el-form-item>
         <span class="demonstration">品种编号</span>
-        <el-input-number v-model="form.cultivar_id" :min="1" :max="1000" :disabled="!check_cid"></el-input-number>
+        <el-input-number v-model="form.cultivar_id" :min="0" :max="1000" :disabled="!check_cid"></el-input-number>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="demonstration">株号</span>
-        <el-input-number v-model="form.plant_id" :min="1" :max="10" :disabled="!check_pid"></el-input-number>
+        <el-input-number v-model="form.plant_id" :min="0" :max="10" :disabled="!check_pid"></el-input-number>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="demonstration">旋转次数</span>
-        <el-input-number v-model="form.revolution_num"  :min="1" :max="10" :disabled="!check_r_num"></el-input-number>
+        <el-input-number v-model="form.revolution_num"  :min="0" :max="10" :disabled="!check_r_num"></el-input-number>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="demonstration">拍摄日期</span>
         <el-date-picker
@@ -34,9 +34,9 @@
       </el-form-item>
       <el-form-item label="拍摄角度:">
         <el-checkbox-group v-model="form.angle">
-          <el-checkbox label="仰视" name="仰视"></el-checkbox>
-          <el-checkbox label="侧视" name="侧视"></el-checkbox>
-          <el-checkbox label="俯视" name="俯视"></el-checkbox>
+          <el-checkbox label="D" name="顶视">顶视</el-checkbox>
+          <el-checkbox label="C" name="侧视">侧视</el-checkbox>
+          <el-checkbox label="X" name="斜视">斜视</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+  import VueEvent from '../../model/VueEvent.js'
     export default {
       name: "IndexTable",
       data (){
@@ -59,9 +60,9 @@
             form:{
               cultivar_id:null,
               plant_id:null,
-              angle:[null],
+              angle:[],
               revolution_num:null,
-              date:[null]
+              date:[]
             },
             result:''
           }
@@ -74,10 +75,16 @@
             this.form
             //向后端传递参数
           ).then(res => {
-            console.log('newresult', res.data)
-            this.result=res.data.data
-            VueEvent.$emit('index-to-newlist',res.data.data)
+            console.log('newresult', res.data.data)
+            // this.result=res.data.data
+            if(res.data.status==='success'){
+              VueEvent.$emit('index-to-newlist',res.data.data)
+              alert('检索成功')
+            }else{
+              alert(res.data.reason)
+            }
           })
+          this.$router.push({path:'newdatalist'})
         }
       }
     }
