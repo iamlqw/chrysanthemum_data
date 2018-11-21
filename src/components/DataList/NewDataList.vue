@@ -52,8 +52,8 @@
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="OriginalImageView(scope.row)">查看原图</el-button>
             <el-button type="text" size="small" @click="LBPImageView(scope.row)">LBP图像</el-button>
-            <el-button type="text" size="small">查看数据</el-button>
-            <el-button type="text" size="small">获取数据</el-button>
+            <el-button type="text" size="small" @click="DataView(scope.row)">查看数据</el-button>
+            <el-button type="text" size="small" @click="GetData(scope.row)">获取数据</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -72,6 +72,9 @@
     <el-dialog title="查看LBP图像" width="70%" :visible.sync="lbpimgLookupFormVisible">
       <v-newlbpimg :lbpbaseCode="lbpbaseCode"></v-newlbpimg>
     </el-dialog>
+   <el-dialog title="查看数据" width="70%" :visible.sync="DataLookupFormVisible">
+      <v-newdata :data="data"></v-newdata>
+    </el-dialog>
   </div>
 </template>
 
@@ -79,24 +82,28 @@
   import VueEvent from '../../model/VueEvent.js'
   import NewDataOriginalImageView from '../DetailedInformation/NewDataOriginalImageView'
   import NewDataLBPImgView from '../DetailedInformation/NewDataLBPImgView'
+  import NewDetailInformation from '../DetailedInformation/NewDetailInformation'
     export default {
         name: "NewDataList",
         data(){
           return{
             email:'',
-            list:[],
-            pagesize: 5,
-            currentPage:1,
-            total:0,
-            baseCode:'',
-            lbpbaseCode:'',
-            imgLookupFormVisible:false,
-            lbpimgLookupFormVisible:false
+            list:[],//返回的列表数据
+            pagesize: 5,//分页
+            currentPage:1,//当前页
+            total:0,//总数据数
+            baseCode:'',//存储原图base码
+            lbpbaseCode:'',//lbpbase码
+            data:'',
+            imgLookupFormVisible:false,//展开对话框，下同
+            lbpimgLookupFormVisible:false,
+            DataLookupFormVisible:false
           }
         },
         components: {
           'v-newimg': NewDataOriginalImageView,
-          'v-newlbpimg': NewDataLBPImgView
+          'v-newlbpimg': NewDataLBPImgView,
+          'v-newdata': NewDetailInformation
         },
         methods: {
           //跳转
@@ -144,6 +151,41 @@
               this.lbpbaseCode='data:image/jpeg;base64,'+res.data.pic.LBP
             })
             this.lbpimgLookupFormVisible = true
+          },
+          //查看信息
+          DataView(row){
+            this.$axios({
+              method: 'post',
+              url: '/api/Instrument/getProcessData',
+              data: {
+                email: this.email,
+                cultivar_id: row.cultivar_id,
+                plant_id:row.plant_id,
+                pic_date:row.pic_date,
+                angle:row.angle,
+                revolution_num:row.revolution_num
+              }
+            }).then(res => {
+              console.log('res', res.data)
+              this.data=res.data.data
+              console.log('data', this.data)
+            })
+              this.DataLookupFormVisible=true
+          },
+          GetData(row) {
+            this.$axios({
+              method: 'post',
+              url: '/api/Instrument/packAndDownload',
+              data: {
+                email: this.email,
+                ids: [row.id]
+              }
+            }).then(res => {
+              console.log('xiazai',res)
+              // if (res.data.status == 'success') {
+              //   window.open('/api/download?email=' + this.email)
+              // }
+            })
           }
         },
       mounted(){

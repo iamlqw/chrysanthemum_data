@@ -63,7 +63,6 @@
 <script>
   import VueEvent from '../../model/VueEvent.js'
   import OldDetailInformation from '../DetailedInformation/OldDetailInformation'
-  import NewDetailInformation from '../DetailedInformation/NewDetailInformation'
     export default {
       name: "OldDataList",
       data() {
