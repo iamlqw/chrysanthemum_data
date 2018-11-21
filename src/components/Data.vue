@@ -80,13 +80,17 @@
             VueEvent.$emit('data-to-oldlist',res.data.data)//把检索到的数据发给表格路由显示
           })
           /*新数据输入框检索*/
-          this.$axios.post(
-            '/api/Instrument/getAllOriginPicInfo',
+          this.$axios({
+            method: 'post',
+            url: '/api/Instrument/getOriginInfoByName',
+            data:{
+              cultivar_name:this.form.cultivar_name
+            }
+          }
           ).then(res => {
             console.log('newresult', res.data.data)
            VueEvent.$emit('data-to-newlist',res.data.data)
           })
-          this.$router.push({path:'olddatalist'})
         }
       },
       mounted:function () {

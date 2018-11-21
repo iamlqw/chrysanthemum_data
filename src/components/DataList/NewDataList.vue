@@ -15,6 +15,7 @@
     <!--</el-dialog>-->
     <!--</div>-->
     <el-button type="primary" @click="Jump()" plain>旧数据</el-button>
+    <el-button type="primary" style="float: right" @click="Download()">下载该页内容</el-button>
     <div id="table">
       <p style="text-align: center;font-size: 40px">新数据列表</p>
       <el-table
@@ -95,6 +96,7 @@
             baseCode:'',//存储原图base码
             lbpbaseCode:'',//lbpbase码
             data:'',
+            ids:[],//批量下载
             imgLookupFormVisible:false,//展开对话框，下同
             lbpimgLookupFormVisible:false,
             DataLookupFormVisible:false
@@ -182,32 +184,67 @@
               }
             }).then(res => {
               console.log('xiazai',res)
-              // if (res.data.status == 'success') {
-              //   window.open('/api/download?email=' + this.email)
-              // }
+              if (res.data.status == 'success') {
+                window.open('/api/download?email=' + this.email)
+              }else{
+                alert(res.data.reason)
+              }
+            })
+          },
+          Download(){
+            for(var i=0;i<this.pagesize;i++){
+              this.ids[i]=this.list[(this.currentPage-1)*this.pagesize+i].id
+            }
+            // console.log('ids',this.ids)
+            this.$axios({
+              method: 'post',
+              url: '/api/Instrument/packAndDownload',
+              data: {
+                email: this.email,
+                ids: this.ids
+              }
+            }).then(res => {
+              console.log('xiazai',res)
+              if (res.data.status == 'success') {
+                window.open('/api/download?email=' + this.email)
+              }else{
+                alert(res.data.reason)
+              }
             })
           }
         },
-      mounted(){
-        var _this = this;//this指代当前对象，在VueEvent内部为VueEvent
-        //接收新数据（输入框）
-        VueEvent.$on('data-to-newlist',function (data) {
-          console.log('newtolist',data)
-          _this.list = data
-          _this.total = data.length
-          console.log('list',this.list)
-        })
-        //接收新数据（索引表）
-        VueEvent.$on('index-to-newlist',function (data) {
-          console.log('tolist',data)
-          _this.list = data
-          _this.total = data.length
-          console.log('list',this.list)
-        })
-        this.$axios.get('/api/currentuser').then(res => {
-          this.email = res.data.data[0]
-        })
-      },
+        mounted(){
+          this.$axios.post('/api/Instrument/getAllOriginPicInfo').then(res => {
+            console.log('newdata', res.data.data)
+            this.list= res.data.data
+          })
+          var _this = this;//this指代当前对象，在VueEvent内部为VueEvent
+          //接收新数据（输入框）
+          VueEvent.$on('data-to-newlist',function (data) {
+            console.log('newtolist',data)
+            if(data==null) {
+              _this.list = ''
+            }else{
+              _this.list = data
+              _this.total = data.length
+            }
+            console.log('list',this.list)
+          })
+          //接收新数据（索引表）
+          VueEvent.$on('index-to-newlist',function (data) {
+            console.log('tolist',data)
+            if(data==null) {
+              _this.list = ''
+            }else{
+              _this.list = data
+              _this.total = data.length
+            }
+            console.log('list',this.list)
+          })
+          this.$axios.get('/api/currentuser').then(res => {
+            this.email = res.data.data[0]
+          })
+        },
     }
 </script>
 

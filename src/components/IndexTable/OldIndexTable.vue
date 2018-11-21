@@ -133,6 +133,7 @@
             this.result=res.data.data
             VueEvent.$emit('index-to-oldlist',res.data.data)
           })
+          this.$router.push({path:'olddatalist'})
         }
       },
       /*测试*/

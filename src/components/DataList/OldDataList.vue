@@ -144,10 +144,10 @@
       props:['result'],
       mounted(){
         //初始化显示所有数据
-        // this.$axios.get('/api/currentuser').then(res => {
-        //   console.log('currentemail', res.data.data[0])
-        //   this.email= res.data.data[0]
-        // })
+        this.$axios.post('/api/allartificial').then(res => {
+          console.log('olddata', res.data.data)
+          this.list= res.data.data
+        })
         // this.$axios({
         //   method: 'post',
         //   url: '/api/getcharacterbyname',
@@ -162,14 +162,22 @@
         var _this = this;//this指代当前对象，在VueEvent内部为VueEvent
         VueEvent.$on('data-to-oldlist',function (data) {
           console.log('tolist',data)
-          _this.list = data
-          _this.total = data.length
+          if(data==null) {
+            _this.list = ''
+          }else {
+            _this.list = data
+            _this.total = data.length
+          }
           console.log('list',this.list)
         })
         VueEvent.$on('index-to-oldlist',function (data) {
           console.log('tolist',data)
-          _this.list = data
-          _this.total = data.length
+          if(data==null) {
+            _this.list = ''
+          }else {
+            _this.list = data
+            _this.total = data.length
+          }
           console.log('list',this.list)
         })
         this.$axios.get('/api/currentuser').then(res => {

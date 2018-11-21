@@ -1,10 +1,10 @@
 <template>
 <div id="homepage">
+
   <el-container class="app_container_view" direction="vertical">
     <!--<h1>菊花数据管理平台</h1>-->
     <el-header height="15%">
-      <transition name="slideDown">
-        <el-card class="header-box-card">
+      <el-card class="header-box-card">
           <!--<img src="../assets/img/页眉.jpg" style="width:100px;float: left">-->
           <!--<p style="color: #243b06; font:65px '华文行楷'">北京林业大学菊花数据管理平台</p>-->
           <!--<p style="color: #243b06; font:40px '华文行楷'">Beijing Forestry University chrysanthemum data management platform</p>-->
@@ -30,8 +30,8 @@
           </el-dropdown-menu>
           </el-dropdown>
         </el-card>
-      </transition>
     </el-header>
+
     <el-main height="85%" class="main-content">
       <transition name="fadeUp">
         <el-card class="main-box-card" v-show="showMain">
@@ -88,10 +88,10 @@
           location.reload()
         }
       },
-      // mounted:function () {
-      //   // if(this.$route.path=='/homepage'){
-      //   //   this.$router.push({path:'homepage/data'})
-      //   // }
+      // mounted() {
+      //   if(this.$route.path=='/homepage'){
+      //     this.$router.push({path:'homepage/data'})
+      //   }
       // }
     }
 </script>

@@ -79,7 +79,6 @@
             // this.result=res.data.data
             if(res.data.status==='success'){
               VueEvent.$emit('index-to-newlist',res.data.data)
-              alert('检索成功')
             }else{
               alert(res.data.reason)
             }
