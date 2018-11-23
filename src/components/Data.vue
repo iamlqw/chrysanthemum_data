@@ -5,12 +5,12 @@
       <el-button type="primary"  icon="el-icon-search" @click="search()"></el-button>
     </div>
     <div>
-      <el-collapse v-model="activeName" accordion>
+      <el-collapse>
         <el-collapse-item>
           <template slot="title" >
             <p style="font-size: 35px">搜索指标</p>
           </template>
-          <el-collapse v-model="activeName" accordion>
+          <el-collapse>
             <el-collapse-item>
               <template slot="title" >
                 <p style="font-size: 30px;padding-left: 40px">  新数据</p>
@@ -28,7 +28,7 @@
       </el-collapse>
     </div>
     <div>
-      <h3>检索数据:</h3>
+      <p style="font-size: 35px">检索数据:</p>
       <keep-alive>
         <router-view></router-view>
       </keep-alive>

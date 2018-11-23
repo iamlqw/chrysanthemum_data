@@ -3,10 +3,10 @@
     <el-form ref="form" :model="form" label-width="200px">
       <el-form-item label=" 需要用来检索的指标:">
         <el-checkbox-group v-model="check_list">
-          <el-checkbox label="品种编号" @change="check_cid=!check_cid">品种编号</el-checkbox>
-          <el-checkbox label="株号" @change="check_pid=!check_pid"></el-checkbox>
-          <el-checkbox label="旋转次数" @change="check_r_num=!check_r_num"></el-checkbox>
-          <el-checkbox label="拍摄日期" @change="check_d=!check_d"></el-checkbox>
+          <el-checkbox label="品种编号" @change="changeCid">品种编号</el-checkbox>
+          <el-checkbox label="株号" @change="changePid"></el-checkbox>
+          <el-checkbox label="旋转次数" @change="changeRnum"></el-checkbox>
+          <el-checkbox label="拍摄日期" @change="changeD"></el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item>
@@ -25,11 +25,10 @@
           v-model="form.date"
           type="daterange"
           align="right"
-          unlink-panels
           range-separator="至"
           start-placeholder="开始日期"
           end-placeholder="结束日期"
-          :picker-options="pickerOptions2">
+          >
         </el-date-picker>
       </el-form-item>
       <el-form-item label="拍摄角度:">
@@ -68,6 +67,22 @@
           }
       },
       methods:{
+        changeCid(){
+          this.check_cid=!this.check_cid
+          this.form.cultivar_id=null
+        },
+        changePid(){
+          this.check_pid=!this.check_pid
+          this.form.plant_id=null
+        },
+        changeRnum(){
+          this.check_r_num=!this.check_r_num
+          this.form.revolution_num=null
+        },
+        changeD(){
+          this.check_d=!this.check_d
+          this.form.date=[]
+        },
         onSubmit(){
           console.log('newresult', this.form)
           this.$axios.post(
@@ -79,6 +94,8 @@
             // this.result=res.data.data
             if(res.data.status==='success'){
               VueEvent.$emit('index-to-newlist',res.data.data)
+            }else if(res.data.reason=="result is empty!") {
+              VueEvent.$emit('index-to-newlist',null)
             }else{
               alert(res.data.reason)
             }

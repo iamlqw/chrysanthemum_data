@@ -7,11 +7,11 @@
                    >
         <el-carousel-item v-for="item in baseCode.length" :key="item">
           <!--<h2>{{item}}</h2>-->
-          <img :onerror="errpic" class="customerHead" :src="baseCode[item-1]" width="300" height="300">
+          <img class="customerHead" :src="baseCode[item-1]" width="300" height="300">
         </el-carousel-item>
       </el-carousel>
     </div>
-    <el-collapse v-model="activeNames" @change="handleChange">
+    <el-collapse>
       <el-collapse-item  id="list" title="基本信息：" name="1">
         <table width="100%">
           <tr>

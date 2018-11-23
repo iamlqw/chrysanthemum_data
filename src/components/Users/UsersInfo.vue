@@ -12,13 +12,13 @@
         width="30%">
         <span>修改密码</span>
         <el-form :model="rePasswordform">
-          <el-form-item label="旧密码" :label-width="formLabelWidth">
+          <el-form-item label="旧密码">
             <el-input type="password" v-model="rePasswordform.old_pwd" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="新密码" :label-width="formLabelWidth">
+          <el-form-item label="新密码">
             <el-input type="password" v-model="rePasswordform.new_pwd" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="确认新密码" :label-width="formLabelWidth">
+          <el-form-item label="确认新密码">
             <el-input type="password" v-model="re_pwd" autocomplete="off"></el-input>
           </el-form-item>
         </el-form>
@@ -29,7 +29,7 @@
       </el-dialog>
       <el-button type="primary" @click="reData()">返回数据页</el-button>
     </div>
-    <el-form :label-position="labelPosition" label-width="100px" :model="reMassageform" v-bind:rules="formRules" style="width: 500px;padding-top: 10px">
+    <el-form label-width="100px" :model="reMassageform" style="width: 500px;padding-top: 10px">
       <el-form-item label="姓名"  prop="name">
         <el-input v-model="reMassageform.name" :disabled="changeinfo"></el-input>
       </el-form-item>

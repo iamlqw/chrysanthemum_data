@@ -192,10 +192,24 @@
             })
           },
           Download(){
-            for(var i=0;i<this.pagesize;i++){
-              this.ids[i]=this.list[(this.currentPage-1)*this.pagesize+i].id
+            console.log('list',this.list)
+            // console.log('currentPage',this.currentPage)
+            // console.log('pagesize',this.pagesize)
+            if(this.list.length<this.pagesize){
+              for(var i=0;i<this.list.length;i++){
+                this.ids[i]=this.list[i].id
+              }
+            }else if(this.currentPage*this.pagesize>this.list.length){
+              for(var i=0;i<this.list.length-(this.currentPage-1)*this.pagesize;i++){
+                this.ids[i]=this.list[(this.currentPage-1)*this.pagesize+i].id
+              }
+            }else{
+              for(var i=0;i<this.pagesize;i++){
+                this.ids[i]=this.list[(this.currentPage-1)*this.pagesize+i].id
+              }
             }
-            // console.log('ids',this.ids)
+
+             console.log('ids',this.ids)
             this.$axios({
               method: 'post',
               url: '/api/Instrument/packAndDownload',

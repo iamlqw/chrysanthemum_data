@@ -22,31 +22,31 @@
       </div>
       <el-dialog title="注册" :visible.sync="dialogRegisterFormVisible">
         <el-form :model="registerform">
-          <el-form-item label="邮箱" :label-width="formLabelWidth">
+          <el-form-item label="邮箱">
             <el-input v-model="registerform.email" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="用户名" :label-width="formLabelWidth">
+          <el-form-item label="用户名">
             <el-input v-model="registerform.username" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="密码" :label-width="formLabelWidth">
+          <el-form-item label="密码">
             <el-input type="password" v-model="registerform.password" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="确认密码" :label-width="formLabelWidth">
+          <el-form-item label="确认密码">
             <el-input type="password" v-model="registerform.repassword" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="年龄" :label-width="formLabelWidth">
+          <el-form-item label="年龄">
             <el-input v-model="registerform.age" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="真实姓名" :label-width="formLabelWidth">
+          <el-form-item label="真实姓名">
             <el-input v-model="registerform.name" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="性别" :label-width="formLabelWidth">
+          <el-form-item label="性别">
             <el-radio-group v-model="registerform.sex">
               <el-radio :label="1">男</el-radio>
               <el-radio :label="0">女</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="手机号" :label-width="formLabelWidth">
+          <el-form-item label="手机号">
             <el-input v-model="registerform.phone" autocomplete="off"></el-input>
           </el-form-item>
           {{registermsg}}
