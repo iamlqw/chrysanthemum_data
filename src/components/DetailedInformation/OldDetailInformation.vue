@@ -20,9 +20,9 @@
             <td><div>植株高度:{{olddata.plant_height}}cm</div></td>
           </tr>
           <tr>
-            <td><div>筒状花全长：{{olddata.disc_florets_length}}</div></td>
+            <td><div>筒状花全长：{{olddata.disc_florets_length}}cm</div></td>
             <td><div>节间长度:{{olddata.internode_length}}cm</div></td>
-            <td><div>总苞片基部到花顶部的位置：{{olddata.position_base_to_top}}</div></td>
+            <td><div>总苞片基部到花顶部的位置：{{olddata.position_base_to_top}}cm</div></td>
           </tr>
           <tr>
           <td><div>品种分类:{{olddata.classification_of_cultivar}}</div></td>
@@ -33,18 +33,18 @@
       <el-collapse-item id="list" title="花：" name="2">
         <table width="100%">
           <tr>
-            <td><div>筒状花部直径：{{olddata.disc_florets_diameter}}</div></td>
+            <td><div>筒状花部直径：{{olddata.disc_florets_diameter}}mm</div></td>
             <td><div>筒状小花数：{{olddata.disc_florets_num}}</div></td>
             <td><div>舌状小花数：{{olddata.ray_florets_num}}</div></td>
           </tr>
           <tr>
-            <td><div>花瓣长度：{{olddata.petal_length}}</div></td>
-            <td><div>花瓣宽度：{{olddata.petal_width}}</div></td>
-            <td><div>花根长度：{{olddata.pedicel_length}}</div></td>
+            <td><div>花瓣长度：{{olddata.petal_length}}cm</div></td>
+            <td><div>花瓣宽度：{{olddata.petal_width}}cm</div></td>
+            <td><div>花根长度：{{olddata.pedicel_length}}cm</div></td>
           </tr>
           <tr>
-            <td><div>花根粗度：{{olddata.pedicel_width}}</div></td>
-            <td><div>花托大小：{{olddata.torus_size}}</div></td>
+            <td><div>花根粗度：{{olddata.pedicel_width}}cm</div></td>
+            <td><div>花托大小：{{olddata.torus_size}}cm</div></td>
             <td><div>花瓣先端形状：{{olddata.petal_tip_shape}}</div></td>
           </tr>
           <tr>
@@ -80,12 +80,12 @@
       <el-collapse-item id="list" title="叶" name="3">
         <table width="100%">
           <tr>
-            <td><div>叶片长：{{olddata.leaf_length}}</div></td>
-            <td><div>叶片宽：{{olddata.leaf_width }}</div></td>
-            <td><div>叶片厚度：{{olddata.leaf_thickness}}</div></td>
+            <td><div>叶片长：{{olddata.leaf_length}}cm</div></td>
+            <td><div>叶片宽：{{olddata.leaf_width }}cm</div></td>
+            <td><div>叶片厚度：{{olddata.leaf_thickness}}mm</div></td>
           </tr>
           <tr>
-            <td><div>叶柄长：{{olddata.setiole_length}}</div></td>
+            <td><div>叶柄长：{{olddata.setiole_length}}cm</div></td>
             <td><div>叶柄长/叶片长 ：{{(olddata.setiole_length/olddata.leaf_length).toFixed(3)}}</div></td>
             <td><div>叶的长宽比 ：{{(olddata.leaf_length/olddata.leaf_width).toFixed(3)}}</div></td>
           </tr>
@@ -350,7 +350,9 @@
 </script>
 
 <style scoped>
-
+  *{
+    font-size: 22px;
+  }
   #picture{
     margin: 0 auto;
     width: 90%;

@@ -1,7 +1,7 @@
 <template>
-  <div style="padding-left: 50px">
-    <el-form ref="form" :model="form" label-width="150px">
-    <el-form-item label="舌状花的重瓣性:">
+  <div>
+    <el-form ref="form" :model="form" label-width="160px">
+    <el-form-item label="舌状花重瓣性:">
       <el-checkbox-group v-model="form.ray_florets_flaps">
         <el-checkbox label="1-2轮" name="1-2轮"></el-checkbox>
         <el-checkbox label="3-4轮" name="3-4轮"></el-checkbox>
@@ -66,7 +66,7 @@
         <el-checkbox label="现代" name="现代"></el-checkbox>
       </el-checkbox-group>
     </el-form-item>
-    <el-form-item label="花属性指标检索:">
+    <el-form-item label="花属性指标:">
       <el-radio-group ref="select" v-model="showIndexes" >
         <el-checkbox v-model="showIndexes" label="plant_height">植株高度（cm）</el-checkbox>
         <el-checkbox v-model="showIndexes" label="flower_diameter">花径大小（cm）</el-checkbox>

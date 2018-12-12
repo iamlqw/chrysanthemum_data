@@ -63,33 +63,19 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 router.beforeEach((to, from, next) => {
-  let info = ''
-  var email = []
   if (to.path === '/login') {
     next()
-    return
+  }else{
+    axios.get('/api/currentuser').then(res => {
+      console.log('currentemail', res.data.data[0])
+      if(res.data.data[0]===null){
+        alert('请重新登录', {confirmButtonText: 'ok'})
+        next({path: '/login'})
+      }else{
+        next()
+      }
+    })
   }
-  axios.get('/api/currentuser').then(res => {
-    console.log('currentemail', res.data.data[0])
-    if(res.data.data[0]===null){
-      alert('请重新登录', {confirmButtonText: 'ok'})
-      next({path: '/login'})
-    }else{
-      next()
-    }
-  //   else {
-  //     info = res.data.data[0]
-  //     email.push({
-  //       'email': info
-  //     })
-  //   return axios.post('/api/currentuserinfo',email[0]).then(res => {
-  //     console.log('currentinfo', res)
-  //     console.log('e')
-  //     next()
-  //   })
-  //   }
-
-  })
   //console.log('email', email)
 
 })

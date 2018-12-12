@@ -14,10 +14,6 @@
         </el-form>
         <div class="connect">
           <p>{{msg}}</p>
-          <p>
-            <a class="facebook" href=""></a>
-            <a class="twitter" href=""></a>
-          </p>
         </div>
       </div>
       <el-dialog title="注册" :visible.sync="dialogRegisterFormVisible">

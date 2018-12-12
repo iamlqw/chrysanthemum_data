@@ -1,7 +1,7 @@
 <template>
-  <div style="padding-left: 50px">
-    <el-form ref="form" :model="form" label-width="200px">
-      <el-form-item label=" 需要用来检索的指标:">
+  <div>
+    <el-form ref="form" :model="form" label-width="120px">
+      <el-form-item label=" 检索指标:">
         <el-checkbox-group v-model="check_list">
           <el-checkbox label="品种编号" @change="changeCid">品种编号</el-checkbox>
           <el-checkbox label="株号" @change="changePid"></el-checkbox>
@@ -14,10 +14,10 @@
         <el-input-number v-model="form.cultivar_id" :min="0" :max="1000" :disabled="!check_cid"></el-input-number>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="demonstration">株号</span>
-        <el-input-number v-model="form.plant_id" :min="0" :max="10" :disabled="!check_pid"></el-input-number>
+        <el-input-number v-model="form.plant_id" :min="0" :max="100" :disabled="!check_pid"></el-input-number>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="demonstration">旋转次数</span>
-        <el-input-number v-model="form.revolution_num"  :min="0" :max="10" :disabled="!check_r_num"></el-input-number>
+        <el-input-number v-model="form.revolution_num"  :min="0" :max="100" :disabled="!check_r_num"></el-input-number>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <span class="demonstration">拍摄日期</span>
         <el-date-picker
@@ -107,5 +107,7 @@
 </script>
 
 <style scoped>
-
+  .demonstration{
+    font-size: 22px;
+  }
 </style>

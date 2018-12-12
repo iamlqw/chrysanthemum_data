@@ -14,14 +14,14 @@
         <!--</el-form>-->
       <!--</el-dialog>-->
     <!--</div>-->
-    <el-button type="primary" @click="Jump()" plain>新数据</el-button>
     <div id="table">
-      <p style="text-align: center;font-size: 40px">旧数据列表</p>
+      <p style="text-align: center;font-size: 40px">人工拍摄数据列表</p>
+      <el-button type="primary" @click="Jump()" plain>转到仪器拍摄数据列表</el-button>
       <el-table
         id="table"
         :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         border
-        style="width: 100%">
+        style="width: 100%;font-size: 22px">
         <el-table-column
           prop="cultivar_name"
           label="品种名">

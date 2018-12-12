@@ -14,15 +14,18 @@
     <!--</el-form>-->
     <!--</el-dialog>-->
     <!--</div>-->
-    <el-button type="primary" @click="Jump()" plain>旧数据</el-button>
-    <el-button type="primary" style="float: right" @click="Download()">下载该页内容</el-button>
+
+
     <div id="table">
-      <p style="text-align: center;font-size: 40px">新数据列表</p>
+      <p style="text-align: center;font-size: 40px">仪器拍摄数据列表</p>
+      <el-button type="primary" @click="Jump()" plain>转到人工拍摄数据列表</el-button>
+
+      <el-button type="primary" style="float: right" @click="Download()">下载该页品种详细数据</el-button>
       <el-table
         id="table"
         :data="list.slice((currentPage-1)*pagesize,currentPage*pagesize)"
         border
-        style="width: 100%">
+        style="width: 100%;font-size: 22px">
         <el-table-column
           prop="cultivar_id"
           label="品种id">
@@ -54,7 +57,7 @@
             <el-button type="text" size="small" @click="OriginalImageView(scope.row)">查看原图</el-button>
             <el-button type="text" size="small" @click="LBPImageView(scope.row)">LBP图像</el-button>
             <el-button type="text" size="small" @click="DataView(scope.row)">查看数据</el-button>
-            <el-button type="text" size="small" @click="GetData(scope.row)">获取数据</el-button>
+            <el-button type="text" size="small" @click="GetData(scope.row)">下载数据</el-button>
           </template>
         </el-table-column>
       </el-table>

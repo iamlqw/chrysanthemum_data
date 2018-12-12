@@ -54,7 +54,7 @@
           </tr>
         </table>
       </el-collapse-item>
-      <el-collapse-item  id="list" title="基本信息：" name="3">
+      <el-collapse-item  id="list" title="其它信息：" name="3">
         <table width="100%">
           <tr>
             <td><div>平滑度:{{data.smoothness}}</div></td>
@@ -117,6 +117,9 @@
 </script>
 
 <style scoped>
+  *{
+    font-size: 22px;
+  }
   #list div{
     margin-left: 5%;
   }

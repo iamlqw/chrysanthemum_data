@@ -31,4 +31,11 @@
 </script>
 
 <style>
+  /*全局样式*/
+  .el-form-item__label,.el-checkbox__label{
+    font-size: 22px;
+  }
+  .el-tabs__item{
+    font-size: 30px;
+  }
 </style>

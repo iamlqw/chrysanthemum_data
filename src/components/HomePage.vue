@@ -3,13 +3,18 @@
 
   <el-container class="app_container_view" direction="vertical">
     <!--<h1>菊花数据管理平台</h1>-->
-    <el-header height="15%">
+    <el-header height="12%">
       <el-card class="header-box-card">
           <!--<img src="../assets/img/页眉.jpg" style="width:100px;float: left">-->
-          <!--<p style="color: #243b06; font:65px '华文行楷'">北京林业大学菊花数据管理平台</p>-->
+          <img src="../assets/img/school.jpg" style="width:100px;float: left;">
+          <span id="title">菊花数据管理平台</span>
+          <div id="search">
+            <el-input v-model="form.cultivar_name" placeholder="请输入品种名" style="width:500px; height:60px"></el-input>
+            <el-button type="primary"  icon="el-icon-search" @click="search()"></el-button>
+          </div>
           <!--<p style="color: #243b06; font:40px '华文行楷'">Beijing Forestry University chrysanthemum data management platform</p>-->
           <el-dropdown id="headright">
-          <span style="color: #243b06; font-size:30px">
+          <span style="color: #243b06; font-size:30px;">
             欢迎 {{name}}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -54,6 +59,7 @@
 </template>
 
 <script>
+  import VueEvent from '../model/VueEvent.js'
     export default {
       name: "HomePage",
       data () {
@@ -61,7 +67,11 @@
           name: '',
           visible2: false,//注销弹窗
           showMain: false,
-          isCollapse: false
+          isCollapse: false,
+          form: {
+            email:'',
+            cultivar_name: ''
+          },
         }
       },
       mounted: function () {
@@ -86,6 +96,35 @@
           })
           this.visible2 = false
           location.reload()
+        },
+        search(){
+          // 获取当前用户名
+          this.$axios.get('/api/currentuser').then(res => {
+            console.log('currentemail', res.data.data[0])
+            this.form.email= res.data.data[0]
+          })
+          console.log(this.form.cultivar_name)
+          /*旧数据输入框检索*/
+          this.$axios.post(
+            '/api/getcharacterbyname',
+            this.form
+          ).then(res => {
+            console.log('result', res.data.data)
+            // this.result=res.data.data
+            VueEvent.$emit('data-to-oldlist',res.data.data)//把检索到的数据发给表格路由显示
+          })
+          /*新数据输入框检索*/
+          this.$axios({
+              method: 'post',
+              url: '/api/Instrument/getOriginInfoByName',
+              data:{
+                cultivar_name:this.form.cultivar_name
+              }
+            }
+          ).then(res => {
+            console.log('newresult', res.data.data)
+            VueEvent.$emit('data-to-newlist',res.data.data)
+          })
         }
       },
       // mounted() {
@@ -126,9 +165,20 @@
     height: 95%;
     width: 100%;
   }
+  #title{
+    color: #243b06;
+    float: left;
+    font:45px '微软雅黑';
+    margin-top: 0.5%;
+  }
+  #search{
+    float: left;
+    margin-left: 15%;
+    margin-top: 1.2%;
+  }
   #headright{
      float: right;
-     margin-top: 2%;
+     margin-top: 1%;
    }
   /*主体*/
   .el-main{
